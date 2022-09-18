@@ -206,11 +206,10 @@ unless indicated otherwise.\\
 \renewcommand{\headrulewidth}{0.4pt}
 
 \section{Introduction}
-The objective of this project was to create a machine learning model to predict credit card default on an industrial-scale dataset. 7 different machine learning models \& 3 deep learning architectures were explored during the experimentation phase. 
+This section will introduce the user to definitions of terms relevant for understanding the problem, discuss the motivation behind the problem, the aim \& approach taken to solve the problem, and the structure of this report. 
 
 
 \subsection{Definitions}
-This section introduces definitions for terms that are important for understanding the problem.
 
 \subsubsection{Credit Card Statement Date}
 The credit card statement date is the date on which the statement/bill is generated every month. Any transaction conducted on the card post billing date will reflect in the next month's credit card statement.
@@ -221,64 +220,92 @@ A credit card account is considered delinquent if the customer has failed to mak
 \subsubsection{Delinquency Rate}
 The percentage of credit card accounts within a financial institution's portfolio whose payments are delinquent.
 \begin{equation}
-	Delinquency Rate = \left(\frac{Number of Delinquent Credit Card Accounts}{Total Number of Credit Card Account}\right) * 100
+	Delinquency Rate = \left(\frac{Number Of Delinquent Credit Card Accounts}{Total Number Of Credit Card Account}\right) * 100
 \end{equation}
 
 \subsubsection{Credit Card Default}
 The customer is considered as defaulting customer in the event of nonpayment of the due amount in 120 days after the latest statement date.
 
 \subsection{Motivation}
+Delinquency rates \& credit card default rates are directly proportional. According to the  figure \ref{fig:fredgraph}, the delinquency rates were at an all-time high just before the recession started in 2008; moreover, this was the same time when more \& more customers began to default on credit card payments. 
+
+Predicting credit defaults is essential for managing risk in the consumer lending industry. Credit default prediction enables lenders to make the best possible lending decisions, improving customer satisfaction and fostering strong company economics. \\
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1.0\textwidth]{fredgraph}
-	\caption[]{Delinquency rate on credit card loans for the period 1992-2022\citep{fedgraph_delinquency_history}.}
+	\caption[Delinquency rate on credit card loans for the period 1992-2022]{Delinquency rate on credit card loans for the period 1992-2022{\citep{fedgraph_delinquency_history}}.}
+	\label{fig:fredgraph}
 \end{figure}
+
+Existing models can be used to manage risk. However, developing models that perform better than those in use is feasible.
+
 \subsection{Aim \& Approach}
-asdfasd
+The objective of this project was to explore different machine learning algorithms \& deep learning architectures on the American Express default prediction dataset\citep{amex-default-prediction-dataset} to predict if a customer will default on the payment in the future. The project work started by developing a model using classic machine learning algorithm \acf{SVM} followed by creating multiple models using Random Forest Classifier \& \acf{GBDT} algorithms. \acf{ANN}, \acf{GRU} \& Custom ensemble model created by model combining \acs{ANN}, \acs{GRU} and \acs{GBDT} were created as part of exploring deep learning architectures. Finally created a lean model, using less features \& optimzed parameters using \acs{GBDT} which provided comparable performances to the previously explored models.
+
 \subsection{Structure of Report}
-safsdfd
+The remainder of the report is structured as follows: in Section \ref{sec:background_knowledge} background information on different machine learning \& deep learning algorithms along with metrics explanation is provided. Then in Section \ref{sec:literature_review} a literature review related to the credit card default prediction research is given. Section \ref{sec:materials} \& \ref{sec:methodology} provides detailed explanations on the dataset, tools \& software used in the project, and methodology followed for creating the models. Model evaluation results and the comparison is given in Section \ref{sec:results_discussions}. Finally Section \ref{sec:conclusion_summary} discusses the conclusion of the project. 
 
 \vfill
 \clearpage
-\section{Background Knowledge}
-asdfsd
+\section{Background Knowledge} \label{sec:background_knowledge}
+This section provides the reader with the required background information on the machine learning algorithms, deep learning architectures \& metrics.
+
+\subsection{\acf{SVM}}
+\subsection{Decision Tree}
+\subsection{Ensemble Models}
+\subsection{\acf{GBDT}}
+\subsection{\acf{XGBoost}}
+\subsection{\acf{LGBM}}
+\subsection{\acf{ANN}}
+\subsection{\acf{GRU}}
+\subsection{Feature Selection - Select From Model}
+\subsection{Metrics}
+\subsubsection{Accuracy}
+\subsubsection{F1-Score}
+\subsubsection{Recall}
+\subsection{\acf{CV}}
+\subsection{Hyper Parameter Tuning}
+\subsubsection{Grid Search CV}
+\subsection{File Format}
+\subsubsection{Parquet}
 \subsection{Summary}
-sadfsd
 
 \vfill
 \clearpage
-\section{Literature Review}
+\section{Literature Review}\label{sec:literature_review}
 asfsf
 \subsection{Summary}
 dfsadfsd
 
 \vfill
 \clearpage
-\section{Materials}
-asdfsd
-\subsection{Dataset}
-asfsf
+\section{Materials}\label{sec:materials}
+
+\subsection{Primary Dataset}
+
+\subsection{Secondary Dataset}
+
 \subsection{Tools \& Software}
-asfsf
+
 
 \vfill
 \clearpage
-\section{Methodology}
-asfsf
-\subsection{Summary}
-dfsadfsd
-
-\vfill
-\clearpage
-\section{Results \& Discussions}
+\section{Methodology}\label{sec:methodology}
 asfsf
 \subsection{Summary}
 dfsadfsd
 
 \vfill
 \clearpage
-\section{Conclusion \& Summary}
+\section{Results \& Discussions}\label{sec:results_discussions}
+asfsf
+\subsection{Summary}
+dfsadfsd
+
+\vfill
+\clearpage
+\section{Conclusion \& Summary}\label{sec:conclusion_summary}
 asfsf
 \subsection{Summary}
 dfsadfsd
