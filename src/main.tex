@@ -64,6 +64,8 @@
 \setlength{\intextsep}{0pt} %from http://tex.stackexchange.com/questions/25828/how-to-remove-change-the-vertical-spacing-before-and-after-an-algorithm-environ
 
 \usepackage[pdftex]{graphicx}
+\graphicspath{ {figures/} }
+
 \usepackage{enumitem}
 \usepackage{pdfpages}
 \usepackage{lastpage}
@@ -84,7 +86,7 @@ breaklines=true
 
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{TODO found: #1!}} %from http://tex.stackexchange.com/questions/9796/how-to-add-todo-notes
 
-\DeclareGraphicsExtensions{.jpg}
+\DeclareGraphicsExtensions{.jpg,.png}
 %%%%%%%%%%%%%%%%%%%%%  END of TEMPLATE %%%%%%%%%%%%%%%%%%%%%
 
 \title{MSc. Project\\\bhamthesistitle}
@@ -188,6 +190,13 @@ unless indicated otherwise.\\
 
 \addcontentsline{toc}{section}{Table of Abbreviations} 
 \clearpage
+
+
+\listoffigures
+
+\addcontentsline{toc}{section}{List of Figures} 
+\clearpage
+
 % set up the page numbering and counter - Table of Abbreviations has no page number
 % also set up the footers and headers appropriately.
 \pagenumbering{arabic}
@@ -197,10 +206,34 @@ unless indicated otherwise.\\
 \renewcommand{\headrulewidth}{0.4pt}
 
 \section{Introduction}
-sdasdfds
+The objective of this project was to create a machine learning model to predict credit card default on an industrial-scale dataset. 7 different machine learning models \& 3 deep learning architectures were explored during the experimentation phase. 
+
+
+\subsection{Definitions}
+This section introduces definitions for terms that are important for understanding the problem.
+
+\subsubsection{Credit Card Statement Date}
+The credit card statement date is the date on which the statement/bill is generated every month. Any transaction conducted on the card post billing date will reflect in the next month's credit card statement.
+
+\subsubsection{Delinquent Account}
+A credit card account is considered delinquent if the customer has failed to make the minimum monthly payment for 30 days from the original due date.
+
+\subsubsection{Delinquency Rate}
+The percentage of credit card accounts within a financial institution's portfolio whose payments are delinquent.
+\begin{equation}
+	Delinquency Rate = \left(\frac{Number of Delinquent Credit Card Accounts}{Total Number of Credit Card Account}\right) * 100
+\end{equation}
+
+\subsubsection{Credit Card Default}
+The customer is considered as defaulting customer in the event of nonpayment of the due amount in 120 days after the latest statement date.
 
 \subsection{Motivation}
-safsdf
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1.0\textwidth]{fredgraph}
+	\caption[]{Delinquency rate on credit card loans for the period 1992-2022\citep{fedgraph_delinquency_history}.}
+\end{figure}
 \subsection{Aim \& Approach}
 asdfasd
 \subsection{Structure of Report}
