@@ -283,11 +283,39 @@ dfsadfsd
 \section{Materials}\label{sec:materials}
 
 \subsection{Primary Dataset}
+The primary dataset contains 190 aggregated profile features of 458913 American Express customers at each statement date for 13 months. Features are anonymized and normalized, and fall into the following general categories:
+
+\begin{itemize}
+	\item D\_* = Delinquency variables
+	\item S\_* = Spend variables
+	\item P\_* = Payment variables
+	\item B\_* = Balance variables
+	\item R\_* = Risk variables	
+\end{itemize}
+
+This dataset\citep{amex-default-prediction-dataset} was released as part of the "American Express - Default Prediction" hosted in Kaggle by the American Express team.
 
 \subsection{Secondary Dataset}
+The secondary dataset was derived from primary dataset by applying the below mathematical aggregate operations to the numerical features.
+\begin{itemize}
+	\item Minimum 
+	\item Maximum
+	\item Mean
+	\item Last Value
+	\item Standard Deviation
+\end{itemize}
+
+Aggregate for the categorical features were taken by the applying below operations.
+\begin{itemize}
+	\item Last Value
+	\item Count
+	\item Unique Value Count
+\end{itemize}
+
+The secondary dataset contains 920 features and 458913 records.
 
 \subsection{Tools \& Software}
-
+The primary programming language used for the implementation of this project is Python version 3.7. Data analysis and manipulation is done using Pandas(1.3.5), seaborn(0.11.2) \& Dask(2.12.0) packages. Scikit Learn(1.0.2) package is used for create, train \& evaluate machine learning models. \acs{ANN} \& \acs{GRU} models were created using Tensorflow (2.8.2).Google colab was used to train the model in cloud and Github was used as the version control \& project management software.
 
 \vfill
 \clearpage
