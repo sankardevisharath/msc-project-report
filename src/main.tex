@@ -260,8 +260,9 @@ This section provides the reader with the required background information on the
 \subsection{\acf{ANN}}
 \subsection{\acf{GRU}}
 \subsection{Feature Selection - Select From Model}
-\subsection{Data Oversampling}
 \subsection{Ordinal Encoder}
+\subsection{Class Imbalance}
+\subsection{Data Oversampling}
 \subsubsection{\acf{SMOTE}}
 \subsubsection{KMeans \acs{SMOTE}}
 \subsection{Metrics}
@@ -269,8 +270,10 @@ This section provides the reader with the required background information on the
 \subsubsection{F1-Score}
 \subsubsection{Recall}
 \subsection{\acf{CV}}
+\subsection{Bias \& Variance }
 \subsection{Hyper Parameter Tuning}
 \subsubsection{Grid Search CV}
+\subsection{Stochastic Gradient Descent}
 \subsection{File Format}
 \subsubsection{Parquet}
 \subsection{Summary}
@@ -324,6 +327,20 @@ The primary programming language used for the implementation of this project is 
 \vfill
 \clearpage
 \section{Methodology}\label{sec:methodology}
+\subsection{Introduction}
+This section will first provide a brief overview of the overall strategy of the experiments performed as part of this project followed by  providing detailed explanation on the data preprocessing techniques used. Then in subsequent sections each experiment/model will be presented along with the model specific explanations \& details.
+
+\subsection{Overview of Methodology Followed}
+Figure \ref{fig:methodology} represents a overview of methodology in general followed for conducting experiments. The dataset was first split into chunks and stored in different files in parquet format to optimize the memory usage. Then, dataset was preprocessed to remove invalid values and encode categorical text variables to numerical values. Followed by data pre-processing, the dataset was split into Training \& Test set, this ensures that none of the entries in test set will have an influence in model training and model selection process. Then the dataset was enhanced using oversampling techniques to resolve the class imbalance issue;in addition, feature selection techniques were used to eliminate the features from the dataset which were less important and hence contribute very little to model. 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=1.0\textwidth, height=0.5\textheight]{methodology}
+	\caption[Methodology]{Methodology followed for the experiments}
+	\label{fig:methodology}
+\end{figure}
+
+After the feature selection, the model was created and then passed through a Hyperparameter tuning pipeline which helps to find the best parameters for the model which would give highest cross validation score. Finally the entire training dataset was trained on the best model found using hyperparameter tuning and the model was evaluated using the test set set aside at the beginning of the experiment.
+
 \subsection{Data Preprocessing} 
 This section discusses the common preprocessing techniques used in all experiments conducted as part of the project. The model specific data preporcessing techniques used will be discussed in respective sections describing the model.
 
@@ -338,8 +355,11 @@ Google Colab provides 24 GB of \acf{RAM} in the  virtual environment, though the
 Additionally, the primary dataset was loaded using Dask framework and split the dataset month wise, ie one file for each month. The month wise files were saved in parquet format which helped to reduce the total size of the dataset from 16GB to 7GB. Similarly the primary dataset was also split customer wise, ie 1-50000 customers data in one file, 50001-100000 customers data in second file etc. These files were later used to build the Secondary Dataset.
 
 \subsection{Model 1 - \acf{SVM}}
+The \acs{SVM} model was created with parameters Regularziation Term = L2 Norm(Squared Error Loss), Alpha = 0.0001, Loss='hinge'(soft-margin), tolerance=0.001. The primary dataset was used to train the model and the model converged after 28 iterations. Early stopping was used to prevent overfitting of the model and 10\% of the data from training set used as the validation set. Stochastic gradient descent was used to optimize the objective function, this ensured that even though the dataset contains millions of records, the training is able to proceed and finish in reasonable time. 
 \subsection{Model 2 - Random Forest Classifier}
+The Random Forest Classifier model uses 100 Decision Trees trained in parallel on the primary dataset. Each decision tree uses a different subset of Primary Dataset with maximum number of records in a database set to 600,000. Gini impurity metric is used to measure the quality of the split while building decision tree. Finally the model predicts the target variable by taking mean of all the predictions from the 100 individual decision trees.
 \subsection{Model 3 - \acf{GBDT}}
+
 \subsection{Model 4 - \acf{XGBoost}}
 \subsection{Model 5 - \acf{LGBM}}
 \subsection{Model 6 - \acf{LGBM + Data Oversampling}}
