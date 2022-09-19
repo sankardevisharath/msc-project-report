@@ -355,18 +355,23 @@ Google Colab provides 24 GB of \acf{RAM} in the  virtual environment, though the
 Additionally, the primary dataset was loaded using Dask framework and split the dataset month wise, ie one file for each month. The month wise files were saved in parquet format which helped to reduce the total size of the dataset from 16GB to 7GB. Similarly the primary dataset was also split customer wise, ie 1-50000 customers data in one file, 50001-100000 customers data in second file etc. These files were later used to build the Secondary Dataset.
 
 \subsection{Model 1 - \acf{SVM}}
-The \acs{SVM} model was created with parameters Regularziation Term = L2 Norm(Squared Error Loss), Alpha = 0.0001, Loss='hinge'(soft-margin), tolerance=0.001. The primary dataset was used to train the model and the model converged after 28 iterations. Early stopping was used to prevent overfitting of the model and 10\% of the data from training set used as the validation set. Stochastic gradient descent was used to optimize the objective function, this ensured that even though the dataset contains millions of records, the training is able to proceed and finish in reasonable time. 
+The \acs{SVM} model was created with parameters Regularziation Term = L2 Norm(Squared Error Loss), Alpha = 0.0001, Loss='hinge'(soft-margin), tolerance=0.001. The primary dataset was used to train the model and the model converged after 28 iterations. Early stopping was used to prevent overfitting of the model and 10\% of the data from training set used as the validation set. Stochastic gradient descent was used to optimize the objective function, this ensured that even though the dataset contains millions of records, the training is able to proceed and finish in reasonable time.  20\% of the Secondary Dataset was used as test set to evaluate the performance of the model.
 \subsection{Model 2 - Random Forest Classifier}
-The Random Forest Classifier model uses 100 Decision Trees trained in parallel on the primary dataset. Each decision tree uses a different subset of Primary Dataset with maximum number of records in a database set to 600,000. Gini impurity metric is used to measure the quality of the split while building decision tree. Finally the model predicts the target variable by taking mean of all the predictions from the 100 individual decision trees.
+The Random Forest Classifier model uses 100 Decision Trees trained in parallel on the primary dataset. Each decision tree uses a different subset of Primary Dataset with maximum number of records in a database set to 600,000. Gini impurity metric is used to measure the quality of the split while building decision tree. Finally the model predicts the target variable by taking mean of all the predictions from the 100 individual decision trees. 20\% of the Secondary Dataset was used as test set to evaluate the performance of the model.
 \subsection{Model 3 - \acf{GBDT}}
-
+\acs{GBDT} model was created using 100 Decision Trees trained sequentially on the primary dataset. Friedman \acf{MSE} is used to measure the quality of a split; additionally, model was set to use only 60\% of the data for constructing each decision trees to avoid memory leakage issue. 10\% of the training set was set for validation purpose; furthermore, the parameters were set to stop the training if the validation score does not improve to avoid overfitting. Loss function for the training was set to Deviance. 20\% of the Secondary Dataset was used as test set to evaluate the performance of the model.
 \subsection{Model 4 - \acf{XGBoost}}
+\acs{XGBoost} model was created using training 100 base learners on the Secondary Dataset and each base learner is constructed using 80\% of the training dataset. Instead of using complete features to construct the base learner, parameters were set to use only 60\% of features, this helped to eliminate the memory leakage/overflow issues while training. Moreover, L2 regularization parameter was set to 0.9 to reduce the overfitting of the model. 20\% of the Secondary Dataset was used as test set to evaluate the performance of the model.
+
 \subsection{Model 5 - \acf{LGBM}}
-\subsection{Model 6 - \acf{LGBM + Data Oversampling}}
-\subsection{Model 7 - \acf{ANN}}
-\subsection{Model 8 - \acf{GRU}}
-\subsection{Model 9 - Ensemble Stacking Model using \acs{ANN} + \acs{GRU} + \acs{GBDT}}
-\subsection{Model 10 - Lean \acs{LGBM} Model}
+\acs{LGBM} model was trained on Secondary dataset and the 100 base learners were constructed using the entire features \& training set. Tradition Gradient Boosting Decision Trees were used as the boosting type and learning rate was set to 0.1. 20\% of the dataset were set aside as the test set for evaluating the model. Maximum depth is not set as to allow trees of any depth. 
+\subsection{Model 6 - \acf{ANN}}
+
+\subsection{Model 7 - \acf{GRU}}
+\subsection{Model 8 - Ensemble Stacking Model using \acs{ANN} + \acs{GRU} + \acs{GBDT}}
+
+\subsection{Model 9 - Lean \acs{LGBM} Model}
+Finally, a lean model was created using \acs{LGBM} model which peformed on par with the other models but with less resources \& data. Firstly the 20\% of the dataset was set aside as test set and remaining 80\% for training purpose. Training dataset was then oversampled using KMeans \acs{SMOTE} method which resulted in the number of defaulting customers \& non defaulting customers to become equal. Secondly the the training dataset was trained using a simple \acs{SVM} model to extract the feature importances; in addition, the features with feature importance weight less than the mean of importance of weights were discarded. This helped to reduced the feature count from 920 in the secondary dataset to 279. This modified dataset was then passed through a Grid Search CV pipeline to choose the best parameters for maximum depth \& maximum number of leafs for base learner trees, and boosting type. \acf{CV} Recall score was used as the metric to choose the best model. Finally, a \acs{LGBM} model was created using the best model parameters found using GridSearchCV and trained the same on the complete training dataset. The final model was tested and evaluated on the test set.
 
 \subsection{Summary}
 dfsadfsd
