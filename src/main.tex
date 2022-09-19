@@ -260,6 +260,10 @@ This section provides the reader with the required background information on the
 \subsection{\acf{ANN}}
 \subsection{\acf{GRU}}
 \subsection{Feature Selection - Select From Model}
+\subsection{Data Oversampling}
+\subsection{Ordinal Encoder}
+\subsubsection{\acf{SMOTE}}
+\subsubsection{KMeans \acs{SMOTE}}
 \subsection{Metrics}
 \subsubsection{Accuracy}
 \subsubsection{F1-Score}
@@ -320,7 +324,30 @@ The primary programming language used for the implementation of this project is 
 \vfill
 \clearpage
 \section{Methodology}\label{sec:methodology}
-asfsf
+\subsection{Data Preprocessing} 
+This section discusses the common preprocessing techniques used in all experiments conducted as part of the project. The model specific data preporcessing techniques used will be discussed in respective sections describing the model.
+
+\subsubsection{Default Values}
+NaN \& NULL values in the dataset was replaced by Zero and if a column contains all values same, it was removed from the dataset. -1 was used as the default value for the categorical variables. The categorical variables were encoded using Ordinal Encoder before passing to the model training pipeline.
+
+\subsubsection{Normalization}
+The primary dataset from American Express is already normalized and all the values lies between zero to ten, hence none of the data normalization techniques were used to preporcess the data.
+\subsubsection{Handling Memory Issue}
+Google Colab provides 24 GB of \acf{RAM} in the  virtual environment, though the Primary Dataset is 16 GB,  the pandas library was unable to load the complete data into memory due to memory leakage issue in the framework. Dask library, which uses multiple Pandas dataframe under the hood, was used to overcome the memory. Dataframe API in Dask library splits the dataset into multiple chunks and loads each chunk on a need basis only ( Lazy Loading), this ensured that the complete 16 GB dataset could be loaded even at a low memory of 4GB.
+
+Additionally, the primary dataset was loaded using Dask framework and split the dataset month wise, ie one file for each month. The month wise files were saved in parquet format which helped to reduce the total size of the dataset from 16GB to 7GB. Similarly the primary dataset was also split customer wise, ie 1-50000 customers data in one file, 50001-100000 customers data in second file etc. These files were later used to build the Secondary Dataset.
+
+\subsection{Model 1 - \acf{SVM}}
+\subsection{Model 2 - Random Forest Classifier}
+\subsection{Model 3 - \acf{GBDT}}
+\subsection{Model 4 - \acf{XGBoost}}
+\subsection{Model 5 - \acf{LGBM}}
+\subsection{Model 6 - \acf{LGBM + Data Oversampling}}
+\subsection{Model 7 - \acf{ANN}}
+\subsection{Model 8 - \acf{GRU}}
+\subsection{Model 9 - Ensemble Stacking Model using \acs{ANN} + \acs{GRU} + \acs{GBDT}}
+\subsection{Model 10 - Lean \acs{LGBM} Model}
+
 \subsection{Summary}
 dfsadfsd
 
@@ -351,7 +378,7 @@ dfsadfsd
 
 \section{Appendix One: Code}
 
-\subsection{Directory Structure}
+\subsection{Directory Structure} 
 
 \subsection{Running the Provided Code}
 
