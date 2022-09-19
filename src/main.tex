@@ -276,12 +276,15 @@ This section provides the reader with the required background information on the
 \subsection{Stochastic Gradient Descent}
 \subsection{File Format}
 \subsubsection{Parquet}
+\subsection{Binary Cross Entropy}
 \subsection{Summary}
 
 \vfill
 \clearpage
 \section{Literature Review}\label{sec:literature_review}
-asfsf
+This section discusses the current techniques used to predict the credit card default. Since the dataset used for these studies differ, a direct comparison of results is not possible. However, an overall comparison of different techniques and its efficiency in predicting the credit card default will be discussed wherever possible.
+
+
 \subsection{Summary}
 dfsadfsd
 
@@ -365,11 +368,33 @@ The Random Forest Classifier model uses 100 Decision Trees trained in parallel o
 
 \subsection{Model 5 - \acf{LGBM}}
 \acs{LGBM} model was trained on Secondary dataset and the 100 base learners were constructed using the entire features \& training set. Tradition Gradient Boosting Decision Trees were used as the boosting type and learning rate was set to 0.1. 20\% of the dataset were set aside as the test set for evaluating the model. Maximum depth is not set as to allow trees of any depth. 
+
 \subsection{Model 6 - \acf{ANN}}
+Figure \ref{fig:nn_arch} depicts the architecture of the custom \acs{ANN} model developed.  The primary dataset was first split into training \& test dataset, followed by oversampling the training dataset using KMeans \acs{SMOTE} to make the percentage of defaulting \& non defaulting customers equal. Then the training dataset was trained using the custom \acs{ANN} model. The first \& second layer uses \acf{ReLU} as the activation function, however the final layer uses Sigmoid as the activation function. Adam optimizer was used to optimze the objective binary cross entropy loss function. The trained model was tested and evaluated on the test set.\\
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.6\textwidth, height=0.3\textheight]{nn_arch}
+	\caption[Custom Neural Network Architecture]{Custom Neural Network Architecture}
+	\label{fig:nn_arch}
+\end{figure}
 
+
+ 
 \subsection{Model 7 - \acf{GRU}}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth, height=0.3\textheight]{gru_arch}
+	\caption[GRU Model Architecture]{GRU Model Architecture\\}
+	\label{fig:gru_arch}
+\end{figure}
 \subsection{Model 8 - Ensemble Stacking Model using \acs{ANN} + \acs{GRU} + \acs{GBDT}}
-
+Figure \ref{fig:gru_nn_gbdt_arch} partially depicts the architecture of the custom ensemble stacking model. The primary dataset is first trained using \acs{GRU} layer followed by a dense layer. In parallel, the secondary dataset is trained using a 2 dense layers. Then the output of these two parallel legs were combined to form the concatenation layer. The output of concatenation layer is then trained using a  \acs{GBDT} model to get the final prediction. Adam optimizer was used to optimze the objective binary cross entropy loss function. Instead of loading complete dataset into memory and train the entire dataset in one go, a dataset generator was written to return chunks of data for training, this helped to eliminate the memory overflow issues.\\
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth, height=0.3\textheight]{GRU_NN_GBDT_Architecture}
+	\caption[Custom Ensemble Stacking Model Architecture]{Custom Ensemble Stacking Model Architecture}
+	\label{fig:gru_nn_gbdt_arch}
+\end{figure}
 \subsection{Model 9 - Lean \acs{LGBM} Model}
 Finally, a lean model was created using \acs{LGBM} model which peformed on par with the other models but with less resources \& data. Firstly the 20\% of the dataset was set aside as test set and remaining 80\% for training purpose. Training dataset was then oversampled using KMeans \acs{SMOTE} method which resulted in the number of defaulting customers \& non defaulting customers to become equal. Secondly the the training dataset was trained using a simple \acs{SVM} model to extract the feature importances; in addition, the features with feature importance weight less than the mean of importance of weights were discarded. This helped to reduced the feature count from 920 in the secondary dataset to 279. This modified dataset was then passed through a Grid Search CV pipeline to choose the best parameters for maximum depth \& maximum number of leafs for base learner trees, and boosting type. \acf{CV} Recall score was used as the metric to choose the best model. Finally, a \acs{LGBM} model was created using the best model parameters found using GridSearchCV and trained the same on the complete training dataset. The final model was tested and evaluated on the test set.
 
