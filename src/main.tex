@@ -15,7 +15,7 @@
 
 
 \usepackage[hyphens]{url}
-\usepackage[breaklinks]{hyperref}
+\usepackage[breaklinks,linktocpage]{hyperref}
 \usepackage{fancyhdr}
 \usepackage[sort]{natbib} 
 \usepackage{comment} % from http://www.latex-community.org/forum/viewtopic.php?f=5&t=4538
@@ -250,7 +250,7 @@ Existing models can be used to manage risk. However, developing models that perf
 The objective of this project was to explore different machine learning algorithms \& deep learning architectures on the American Express default prediction dataset\citep{amex-default-prediction-dataset} to predict if a customer will default on the payment in the future. The project work started by developing a model using classic machine learning algorithm \acf{SVM} followed by creating multiple models using Random Forest Classifier \& \acf{GBDT} algorithms. \acf{ANN}, \acf{GRU} \& Custom ensemble model created by model combining \acs{ANN}, \acs{GRU} and \acs{GBDT} were created as part of exploring deep learning architectures. Finally created a lean model, using less features \& optimzed parameters using \acs{GBDT} which provided comparable performances to the previously explored models.
 
 \subsection{Structure of Report}
-The remainder of the report is structured as follows: in Section \ref{sec:background_knowledge} background information on different machine learning \& deep learning algorithms along with metrics explanation is provided. Then in Section \ref{sec:literature_review} a literature review related to the credit card default prediction research is given. Section \ref{sec:materials} \& \ref{sec:methodology} provides detailed explanations on the dataset, tools \& software used in the project, and methodology followed for creating the models. Model evaluation results and the comparison is given in Section \ref{sec:results_discussions}. Finally Section \ref{sec:conclusion_summary} discusses the conclusion of the project. 
+The remainder of the report is structured as follows: in Section \ref{sec:background_knowledge} background information on different machine learning \& deep learning algorithms along with metrics explanation is provided. Then in Section \ref{sec:literature_review} a literature review related to the credit card default prediction research is given. Section \ref{sec:materials} \& \ref{sec:methodology} provides detailed explanations on the dataset, tools \& software used in the project, and methodology followed for creating the models. Model evaluation results and the comparison is given in Section \ref{sec:results_discussions}. Finally Section \ref{sec:conclusion} discusses the conclusion of the project. 
 
 \vfill
 \clearpage
@@ -418,18 +418,23 @@ Finally, a lean model was created using \acs{LGBM} model which peformed on par w
 \subsection{Summary}
 Firstly, this section presented overall methodology followed for the experiments followed by the data preprocessing techniques used. Handling of invalid feature values, normalization \& handling memory leakage and memory overflow issue were discussed in the Data Preprocessing section. Secondly, the 9 different models created to solve the problem were discussed. Initially \acs{SVM} model \& Random Forest Classifier model were discussed followed by more advanced machine learning techniques such as \acs{GBDT}, \acs{XGBoost} \& \acs{LGBM}. Then 3 models using deep learning techniques such as Neural Network, \acs{GRU}  and Ensemble Stacking model were presented. Finally a lean model was developed and presented which used less features for training, was computationally less expensive and was explainable model. Before training the final model, the model was passed through a data oversampling pipeline, feature selection pipeline. The model was also tuned using GridSearchCV method to find the optimal hyper parameters. In all the experiments 20\% of data was set aside before training for testing \& evaluation purposes.
 
-\vfill
-\clearpage
 \section{Results \& Discussions}\label{sec:results_discussions}
-\begin{table}
+
+\subsection{Introduction}
+Firstly this section presents the test result of the experiments conducted based on the methodology described in section \ref{sec:methodology}. Secondly the main highlights or achievements of the project is discussed. Finally, limitations of this project as well as the future works are discussed.
+
+\subsection{Test Results}
+Table \ref{table:results} depicts the result of running the models discussed in section \ref{sec:methodology} on the test set. 4 metrics, F1 Score, Recall, Accuracy \& Precision is used to compare the performance of the models. Though 4 metrics are tracked, Recall \& F1 Score are the metric which is used for Hyper Parameter Tuning, Early Stopping, Cross Validation across all experiments. This decision was taken based on observation that Accuracy will not be a good metric as the dataset is imbalanced; furthermore, the F1 score \& Recall provides a better indictation on how well the model is able to predict the defaulting clients correctly.
+
+\begin{table}[h]
 	\begin{center}
 		\begin{tabular}{|| c | c | c | c | c ||} 
 			\hline
 			Model & F1 Score & Recall & Accuracy & Precision \\ [0.5ex] 
 			\hline\hline
-			SVM	 & 74.66	& 75.57	& 87.24	& 73.78 \\
+			SVM	 & 74.66	& 75.57	& 87.24	& \cellcolor[HTML]{ff6666} 73.78 \\
 			\hline
-			RF	 & 73.81	& 72.78	& 87.13	& 74.86 \\
+			RF	 & \cellcolor[HTML]{ff6666} 73.81	& \cellcolor[HTML]{ff6666} 72.78	& \cellcolor[HTML]{ff6666} 87.13	& 74.86 \\
 			\hline
 			GBDT	 & 74.33	& 74.13	& 87.25	& 74.52 \\
 			\hline
@@ -451,7 +456,11 @@ Firstly, this section presented overall methodology followed for the experiments
 	\end{center}
 \end{table}
 
-\begin{table}
+The \acs{SVM} provided an accuracy of 87.24\% \& F1 score of 74.66 which was impressive considering the model took very less time to train compared to other models; thus, \acs{SVM} model was used in Lean \acs{LGBM} model as part of feature selection pipeline. \acs{RF} model performed worst on F1 Score, Recall \& Accuracy among all the models experimented as part of this project. This reduced performance of \acs{RF} could be due to the large dataset \& dimensionality and the algorithm is not able to generalize well with 100 decision trees. \acs{GBDT} model provided similar results to \acs{SVM} model, however, \acs{GBDT} provided better Precision while \acs{SVM} provided better Recall scores. Ensemble boosting techniques \acs{XGBoost} \& \acs{LGBM} performed really well the test set such that F1 score \& Recall increased almost by  6\% compared to \acs{SVM} model. \acs{LGBM} model performed slightly better than \acs{XGBoost} model in all the metrics and \acs{LGBM} model took less time to train compared to \acs{XGBoost}.
+
+\acs{ANN} model provided the highest F1 Score \& Recall among all the models, however, the difference in F1 Score of \acs{LGBM} and \acs{ANN} model is only 0.02. \acs{ANN}  model provided better Recall score while \acs{LGBM} provided better Precision score. \acs{GRU}+\acs{ANN}+\acs{GBDT} model provided best accuracy score of 90.87 among all the models. \acs{GRU} provided the second best accuracy score;moreover, considering that \acs{GRU} model has 49,165 trainable parameters while the \acs{GRU}+\acs{ANN}+\acs{GBDT} has 178,945, the \acs{GRU} model is able to extract the features better than \acs{GRU}+\acs{ANN}+\acs{GBDT} with less parameters. The table \ref{table:trainable_params} shows the trainable parameter count for the deep learning models explored.
+
+\begin{table}[h]
 	\begin{center}
 		\begin{tabular}{|| c | c ||} 
 			\hline
@@ -469,6 +478,7 @@ Firstly, this section presented overall methodology followed for the experiments
 	\end{center}
 \end{table}
 
+The Lean \acs{LGBM} model provides a F1 Score of 80.95 which is only 0.08 less than the best performing \acs{ANN} model; futhermore, the Lean \acs{LGBM} provided the best Precision score among all the models. Lean \acs{LGBM} model uses only 1/3rd of the features used by the \acs{ANN} model and still provides comparable performance. The figure \ref{fig:cm_ml} represents the confusion matrix of all the Machine Learning models explored during this project.
 
 \begin{figure}[ht]
 	
@@ -508,15 +518,42 @@ Firstly, this section presented overall methodology followed for the experiments
 	\caption[Confusion Matrix of Machine Leaning Models]{Confusion Matrix of Machine Leaning Models}
 	\label{fig:cm_ml}
 \end{figure}
+\subsubsection{Feature Importance}
+The table \ref{table:imp_features} represents the top 5 features based on the importance from model Lean \acs{LGBM}. This is another advantage of Lean \acs{LGBM} model over the \acs{ANN} model, the Lean \acs{LGBM} model is explainable. However, the features in the Primary Dataset \& Secondary Dataset is anonymized, hence it is not possible to know the exact real life meaning of these features.
+
+\begin{table}[h]
+	\begin{center}
+		\begin{tabular}{|| c | c ||} 
+			\hline
+			Feature & Importance Score \\ [0.5ex] 
+			\hline\hline
+			D\_39\_last &	226 \\
+			\hline
+			P\_2\_last &	214 \\
+			\hline
+			B\_4\_last &	191 \\
+			\hline
+			B\_3\_last &	162 \\
+			\hline
+			B\_1\_last &	144 \\
+			\hline
+		\end{tabular}
+		\caption{Important Features Extracted Based on Lean \acs{LGBM} model  (Secondary Dataset)}
+		\label{table:imp_features}
+	\end{center}
+\end{table}
+
+
+\subsection{Achievements}
+As mentioned in \ref{sec:literature_review}, most of the previous work on credit card default prediction was based on dataset containing records less than 100,000. However the Primary Dataset used in this work has around 5 Million records of 400,000 unique customers. Most of the previous works concluded that the Ensemble Boosting classifier such as \acs{XGBoost} \& \acs{GBDT} performed better than the traditional machine learning algorithms, this is reconfirmed on large dataset with the work of this project. On the other hand, this work helped to identify  that the difference in peformances between the Deep Learning Network \& Ensemble Boosting Algorithms reduced on large dataset, however it the differences were significant in the smaller datasets. Finally, it was reconfirmed that the models performed better on balanced data and  KMeans \acs{SMOTE} is a suitable candidate for fixing the class imbalance.
+
+\subsection{Limitations \& Future Work}
+
 \subsection{Summary}
-dfsadfsd
 
 \vfill
 \clearpage
-\section{Conclusion \& Summary}\label{sec:conclusion_summary}
-asfsf
-\subsection{Summary}
-dfsadfsd
+\section{Conclusion}\label{sec:conclusion}
 
 \vfill
 \clearpage
