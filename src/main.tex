@@ -27,7 +27,7 @@
 \renewcommand{\algorithmiccomment}[1]{#1} %http://tex.stackexchange.com/q1uestions/61861/algorithmic-package-for-loop-and-comment-at-the-same-line
 \usepackage[printonlyused]{acronym}
 \usepackage[table]{xcolor}
-
+\usepackage{subcaption}
 
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}	%from tex.stackexchange.com/questions/111361
@@ -469,6 +469,45 @@ Firstly, this section presented overall methodology followed for the experiments
 	\end{center}
 \end{table}
 
+
+\begin{figure}[ht]
+	
+	\begin{subfigure}{0.4 \textwidth}
+		\includegraphics[width=1\linewidth, height=0.8\linewidth]{cm_svm}
+		\subcaption[Support Vector Machine]{\acs{SVM}}
+		\label{fig:cm_svm}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.4 \textwidth}
+		\includegraphics[width=1\linewidth, height=0.8\linewidth]{cm_rf}
+		\caption[Random Forest]{\acs{RF}}
+		\label{fig:cm_rf}
+	\end{subfigure}
+	\begin{subfigure}{0.4 \textwidth}
+		\includegraphics[width=1\linewidth, height=0.8\linewidth]{cm_gbdt}
+		\caption[Gradient Boosting Decision Tree]{\acs{GBDT}}
+		\label{fig:cm_gbdt}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.4 \textwidth}
+		\includegraphics[width=1\linewidth, height=0.8\linewidth]{cm_xgboost}
+		\caption[Xtreme Gradient Boosting Descision Tree]{\acs{XGBoost}}
+		\label{fig:cm_xgboost}
+	\end{subfigure}
+	\begin{subfigure}{0.4 \textwidth}
+		\includegraphics[width=1\linewidth, height=0.8\linewidth]{cm_lgbm}
+		\caption[Light Gradient Boosting Machine]{\acs{LGBM}}
+		\label{fig:cm_lgbm}
+	\end{subfigure}
+	\hfill
+		\begin{subfigure}{0.4 \textwidth}
+		\includegraphics[width=1\linewidth, height=0.8\linewidth]{cm_lean_lgbm}
+		\caption[Lean Light Gradient Boosting Machine]{Lean LGBM}
+		\label{fig:cm_lean_lgbm}
+	\end{subfigure}
+	\caption[Confusion Matrix of Machine Leaning Models]{Confusion Matrix of Machine Leaning Models}
+	\label{fig:cm_ml}
+\end{figure}
 \subsection{Summary}
 dfsadfsd
 
@@ -498,3 +537,4 @@ dfsadfsd
 
 \clearpage
 \end{document}
+
