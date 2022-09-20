@@ -282,11 +282,22 @@ This section provides the reader with the required background information on the
 \vfill
 \clearpage
 \section{Literature Review}\label{sec:literature_review}
+\subsection{Introduction}
 This section discusses the current techniques used to predict the credit card default. Since the dataset used for these studies differ, a direct comparison of results is not possible. However, an overall comparison of different techniques and its efficiency in predicting the credit card default will be discussed wherever possible.
 
+\subsection{Previous Work}
+\citep{sayjadah2018credit} developed logistic regression, rpart decision tree \& Random Forest Classifier models on dataset generated from credit card operations. The dataset contains 30000 records and 24 features. A \acf{CFS} technique was used to reduce the dimensionality of the dataset. 30\% of the dataset was used as the test set for evaluating the performance. \citep{sayjadah2018credit} found that the Random Forest Classifier provided highest \acf{AUC} among the models.\\
+
+\citep{widyadhanacredit} developed Logistic Regressiion, \acs{SVM}, \acs{ANN} \& Random Forest Classifier models to preduct credit card default on dataset containing 1000 records and 11 features. The dataset contains credit card data from cardholders from the territory of Indonesia;moreover, the authors used \acf{PCA} to do feature selection also. The dataset is split into 70:30 Train/Test set and the \acs{AUC} was used to compare the results. The authors found that the Random Forest Classifier outperformed all other models by far and provided a 80\% \acs{AUC} score.\\
+
+\citep{hsu2019enhanced} approached the credit card default prediction from a different perspective and proposed a model where dynamic features (time dependent features) were first passed through a \acf{RNN} network to extract the time dependent features. Then the extracted dynamic features were concatenated with the static features and trained on a Random Forest Classifer. The dataset contained 30,000 samples credit card payment history with 23 features (5 static feature, 18 dynamic features). The authors compared the results of the proposed model with the \acs{SVM}, Logistic Regression and KNN models and found that proposed method outperformed the others and provided a \acs{AUC} score of 78\%.
+
+\citep{alam2020investigation} investigated different approaches to solve the credit card default prediction problem with a specific focus on Class Imbalance. The credit card default prediction dataset are inherently imbalanced as only a small fraction of customers default on credit card. The authors employed different data under/over sampling techniques and evaluated performance on multiple credit card default dataset. They found that \acs{GBDT} classifier when used with KMeans \acs{SMOTE} provided the best results and the models performed significantly better on balanced datasets compared to imbalanced datasets.
+
+\citep{faraj2021comparison} research shows that ensemble  methods  consistently  outperform  Neural  Networks  and  other  machine  learning algorithms in terms of F1 score. \citep{faraj2021comparison} uses the same dataset as the \citep{sayjadah2018credit} which has 30,000 records and 24 features. The authors found that \acs{XGBoost} provided maximum F1 score compared to Neural Networks, Random Forest Classifier and custom ensemble stacking model. Authors also concludes that the performance of \acs{XGBoost} model did not improve on balanced datasets. This observation was in contrary to the observations made by \citep{emil2019enhancing}, the authors of earlier had found that the best performance is achieved on \acs{GBDT} with KMeans \acs{SMOTE} method.
 
 \subsection{Summary}
-dfsadfsd
+In conclusion, the ensemble boosting models generally provided better performance than the classic machine learning and deep learning techniques. The data under/over sampling had mixed performances depending on the dataset, some performed better with under/over sampling and some did not. Out of data under/over sampling techniques, KMeans \acs{SMOTE} performed better. Some studies used feature selection techniques in the data preprocessing techniques which improved the model efficiency. The studies discussed in the section used dataset which were imbalanced and  contained atmost 30,000 records; however, \citep{amex-default-prediction-dataset} contains 5 Million records and exploring the different techniques on such large scale dataset will help us to consolidate the understanding gained from these papers.
 
 \vfill
 \clearpage
@@ -378,12 +389,12 @@ Figure \ref{fig:nn_arch} depicts the architecture of the custom \acs{ANN} model 
 	\label{fig:nn_arch}
 \end{figure}
 
-
- 
 \subsection{Model 7 - \acf{GRU}}
+Figure \ref{fig:gru_arch} represents the architecture of the GRU based model for predicting credit card default. The primary dataset is used for training this model;furthermore, the tanh function is used as the activation function and sigmoid  is used as the recurrent activation function  for the GRU layer. Dropout of 10\%, recurrent dropout of 50\% added to reduce the overfitting problem. The output of the GRU layer is then fed to dense layer followed by another dense layer with activation sigmoid for making final prediction. Optimizer used is Adam \& the loss function is Binary Cross Entropy. A dataset generator was created to provide input to the model in chunks, this helped to eliminate the memory issues while training. The final model contains 49165 trainable parameters.\\
+
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth, height=0.3\textheight]{gru_arch}
+	\includegraphics[width=0.6\textwidth, height=0.3\textheight]{gru_arch}
 	\caption[GRU Model Architecture]{GRU Model Architecture\\}
 	\label{fig:gru_arch}
 \end{figure}
@@ -399,7 +410,7 @@ Figure \ref{fig:gru_nn_gbdt_arch} partially depicts the architecture of the cust
 Finally, a lean model was created using \acs{LGBM} model which peformed on par with the other models but with less resources \& data. Firstly the 20\% of the dataset was set aside as test set and remaining 80\% for training purpose. Training dataset was then oversampled using KMeans \acs{SMOTE} method which resulted in the number of defaulting customers \& non defaulting customers to become equal. Secondly the the training dataset was trained using a simple \acs{SVM} model to extract the feature importances; in addition, the features with feature importance weight less than the mean of importance of weights were discarded. This helped to reduced the feature count from 920 in the secondary dataset to 279. This modified dataset was then passed through a Grid Search CV pipeline to choose the best parameters for maximum depth \& maximum number of leafs for base learner trees, and boosting type. \acf{CV} Recall score was used as the metric to choose the best model. Finally, a \acs{LGBM} model was created using the best model parameters found using GridSearchCV and trained the same on the complete training dataset. The final model was tested and evaluated on the test set.
 
 \subsection{Summary}
-dfsadfsd
+Firstly, this section presented overall methodology followed for the experiments followed by the data preprocessing techniques used. Handling of invalid feature values, normalization \& handling memory leakage and memory overflow issue were discussed in the Data Preprocessing section. Secondly, the 9 different models created to solve the problem were discussed. Initially \acs{SVM} model \& Random Forest Classifier model were discussed followed by more advanced machine learning techniques such as \acs{GBDT}, \acs{XGBoost} \& \acs{LGBM}. Then 3 models using deep learning techniques such as Neural Network, \acs{GRU}  and Ensemble Stacking model were presented. Finally a lean model was developed and presented which used less features for training, was computationally less expensive and was explainable model. Before training the final model, the model was passed through a data oversampling pipeline, feature selection pipeline. The model was also tuned using GridSearchCV method to find the optimal hyper parameters. In all the experiments 20\% of data was set aside before training for testing \& evaluation purposes.
 
 \vfill
 \clearpage
