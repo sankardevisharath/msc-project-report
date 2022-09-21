@@ -569,7 +569,12 @@ Then the achievements of the experiments, such as reconfirming understanding fro
 Finally, the limitations related to the data sampling, feature selection, huge dataset size were discussed along with proposing future works that could be conducted on the dataset \& models.
 
 \section{Conclusion}\label{sec:conclusion}
-In conclusion, the 
+The objective of this project was to explore different machine learning algorithms \& deep learning architectures on the American Express default prediction dataset\citep{amex-default-prediction-dataset} to predict if a customer will default on the payment in the future. 8 different models (5 Machine Learning \& 3 Deep Learning models) were explored in this project;subsequently, it was identified that \acf{ANN} networks performed best in terms of F1 Score metrics. However, \acs{ANN} model only performed slightly better then the best performing machine learning model, \acs{LGBM};more importantly, the increase in performance was almost negligible considering the complexity of deep learning networks to traditional machine learning models and the non-explainability of \acs{ANN} models.Thus, we can conclude that the \acs{LGBM} is a better choice for credit card default prediction in a industry environment, this is because the explainability of Machine Learning model could become useful for the organizations which require to provide explanations regarding the model to Regulatory Authorities.
+
+Based on the above conclusion, an improved \& efficient model, Lean \acs{LGBM}, was proposed which uses 1/3rd of the features ( hence less dataset size) of the Secondary Dataset to provide performance on par with the \acs{LGBM} \& \acs{ANN} models. This Lean \acs{LGBM} model uses Feature Selection Techniques, Data Oversampling Technique(KMeans-\acs{SMOTE}) and Hyper Parameter tuning to obtain high performance with minimal computations. 
+
+In conclusion,   as reported in various studies \citep{alam2020investigation}, \citep{alam2020investigation}, \citep{emil2019enhancing}, the Ensemble Boosting techniques such as \acs{XGBoost} \& \acs{LGBM} provides best performance in terms of F1 Score \& computation for credit card default prediction problems. 
+
 
 
 \vfill
