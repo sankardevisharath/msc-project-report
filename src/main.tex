@@ -265,7 +265,9 @@ This section provides the reader with the required background information on the
 \subsection{\acf{LGBM}}
 \subsection{\acf{ANN}}
 \subsection{\acf{GRU}}
-\subsection{Feature Selection - Select From Model}
+\subsection{Feature Selection}
+\subsubsection{Select From Model}
+\subsubsection{Sequential Feature Selection}
 \subsection{Ordinal Encoder}
 \subsection{Class Imbalance}
 \subsection{Data Oversampling}
@@ -480,7 +482,7 @@ The \acs{SVM} provided an accuracy of 87.24\% \& F1 score of 74.66 which was imp
 
 The Lean \acs{LGBM} model provides a F1 Score of 80.95 which is only 0.08 less than the best performing \acs{ANN} model; futhermore, the Lean \acs{LGBM} provided the best Precision score among all the models. Lean \acs{LGBM} model uses only 1/3rd of the features used by the \acs{ANN} model and still provides comparable performance. The figure \ref{fig:cm_ml} represents the confusion matrix of all the Machine Learning models explored during this project.
 
-\begin{figure}[ht]
+\begin{figure}[h!]
 	
 	\begin{subfigure}{0.4 \textwidth}
 		\includegraphics[width=1\linewidth, height=0.8\linewidth]{cm_svm}
@@ -518,7 +520,7 @@ The Lean \acs{LGBM} model provides a F1 Score of 80.95 which is only 0.08 less t
 	\caption[Confusion Matrix of Machine Leaning Models]{Confusion Matrix of Machine Leaning Models}
 	\label{fig:cm_ml}
 \end{figure}
-\subsubsection{Feature Importance}
+\subsubsection{Feature Importance} \label{subsec:feature_imp}
 The table \ref{table:imp_features} represents the top 5 features based on the importance from model Lean \acs{LGBM}. This is another advantage of Lean \acs{LGBM} model over the \acs{ANN} model, the Lean \acs{LGBM} model is explainable. However, the features in the Primary Dataset \& Secondary Dataset is anonymized, hence it is not possible to know the exact real life meaning of these features.
 
 \begin{table}[h]
@@ -549,23 +551,37 @@ As mentioned in \ref{sec:literature_review}, most of the previous work on credit
 
 \subsection{Limitations \& Future Work}
 
+\subsubsection{Limitations}
+Training using some of the traditional machine learning algorithms, such as Non Linear \acs{SVM}, \acf{KNN} etc, were not possible due to the large dataset size and the related time complexity. Feature selection using Sequential Feature Selection technique was tried to select 50 features from the Secondary Dataset;however, due to the large number of features and the large dataset size, Sequential Feature Selection did not complete even after 20 hours. Thus, due to the time constraint on the project as well as the cost related to training on Google Colab, Sequential Feature Selection was dropped from experiments and instead Select From Model technique were used.
+
+Additionally, though multiple data over/under sampling techniques, such as SVMSMOTE, BorderlineSMOTE, Cluster Centroids etc,  were tried, none of them worked as some throw memory overflow issue and others did not complete due to higher time complexity. Since the features of the dataset is anonymized, applying domain knowledge to feature selection process was not possible; moreover, features identified as important in section \ref{subsec:feature_imp} can not be made sense in real life as the features are anonymized. 
+Finally, the  data types auto-detected by the Pandas framework while loading dataset is not optimal because even though some of the features contains values between 0 - 1 with precision up to 10 decimal points, still Pandas chooses float64 as the datatype by default. This causes the in memory size of the dataset to quickly exceed the available memory and making impossible to try some of the machine learning algorithms.
+
+\subsubsection{Future Work}
+Scikit Learn \citep{scikit-learn} provides limited support for parallel computing, yet this can be explored to make certain computations faster and it might help to overcome some of the computation related limitations mentioned in previous section. Since the data types auto-detected by the Pandas framework while loading dataset is not optimal, one can explore individual features and manually find an optimal datatype of the feature and save this new dataset in parquet format. This will help to reduce the overall size of the dataset and will make loading the dataset to memory much easier.
+
+Attention based Transformer networks recently shown to perform well for time series based classification tasks \citep{wen2022transformers}, \citep{lim2021temporal}, \citep{cholakov2021transformers}, this could be explored on the Primary Dataset to extract dynamic features or could be used as part of the Ensemble Stacking model as one of the learners. TabNet (Attentive Interpretable Tabular Learning)\citep{arik2021tabnet} architecture on classification problems with tabular dataset provides promising performance;thus, this architecture could be explored on the Primary/Secondary dataset to check if provides better performance than the models explored in this project.
+
+In order to overcome some of the challenges related to feature selection mentioned in the previous section, one can explore the idea of stacking the different feature selection techniques in sequential manner, so that less expensive feature selection technique is applied first and then more expensive techniques applied later in the feature selection pipeline.
 \subsection{Summary}
+In summary, this section initially discussed the evaluation results of different model on the test set. It was identified that the \acs{ANN} network scored the highest on F1 Score \& Recall metrics while \acs{GRU}+\acs{ANN}+\acs{GBDT} scored the highest score on accuracy metric. The Lean \acs{LGBM} model performed on par with the best scoring models while using less features;also, the Lean \acs{LGBM} scored highest on Precision metrics. Top 5 important features were identified from the Lean \acs{LGBM} model result and the same was presented.
+Then the achievements of the experiments, such as reconfirming understanding from prior studies on huge industry scale dataset and identifying that the performance of Ensemble Boosting models is on par with the deep learning architecture performance on large datasets.
+Finally, the limitations related to the data sampling, feature selection, huge dataset size were discussed along with proposing future works that could be conducted on the dataset \& models.
 
-\vfill
-\clearpage
 \section{Conclusion}\label{sec:conclusion}
+In conclusion, the 
+
 
 \vfill
 \clearpage
-
 \lhead{}\chead{MSc. Project Report :: \nouppercase{\leftmark}}\rhead{}
 \phantomsection
 \addcontentsline{toc}{section}{References}
 \bibliographystyle{agsm} 
 \bibliography{mybib}
 
+\vfill
 \clearpage
-
 \section{Appendix One: Code}
 
 \subsection{Directory Structure} 
