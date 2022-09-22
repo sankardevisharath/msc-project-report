@@ -68,6 +68,7 @@
 \usepackage[pdftex]{graphicx}
 \graphicspath{ {figures/} }
 
+
 \usepackage{enumitem}
 \usepackage{pdfpages}
 \usepackage{lastpage}
@@ -88,7 +89,7 @@ breaklines=true
 
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{TODO found: #1!}} %from http://tex.stackexchange.com/questions/9796/how-to-add-todo-notes
 
-\DeclareGraphicsExtensions{.jpg,.png}
+\DeclareGraphicsExtensions{.jpg,.jpeg,.png,.ppm}
 %%%%%%%%%%%%%%%%%%%%%  END of TEMPLATE %%%%%%%%%%%%%%%%%%%%%
 
 \title{MSc. Project\\\bhamthesistitle}
@@ -252,33 +253,148 @@ The objective of this project was to explore different machine learning algorith
 \subsection{Structure of Report}
 The remainder of the report is structured as follows: in Section \ref{sec:background_knowledge} background information on different machine learning \& deep learning algorithms along with metrics explanation is provided. Then in Section \ref{sec:literature_review} a literature review related to the credit card default prediction research is given. Section \ref{sec:materials} \& \ref{sec:methodology} provides detailed explanations on the dataset, tools \& software used in the project, and methodology followed for creating the models. Model evaluation results and the comparison is given in Section \ref{sec:results_discussions}. Finally Section \ref{sec:conclusion} discusses the conclusion of the project. 
 
-\vfill
-\clearpage
 \section{Background Knowledge} \label{sec:background_knowledge}
-This section provides the reader with the required background information on the machine learning algorithms, deep learning architectures \& metrics.
-
+This section provides the reader with the required background information on the machine learning algorithms, deep learning architectures, data preprocessing techniques \& model evaluation metrics. The explanations provided in this section are at intutive level only without going deeper into the mathematical formulation.
 \subsection{\acf{SVM}}
-\subsection{Decision Tree}
-\subsection{Ensemble Models}
+\acs{SVM} is a reliable classification and regression machine learning algorithm that maximizes the accuracy of a model without overfitting the training data. There are 4 main components to the \acs{SVM} model, Hyperplane, Support Vectors, Margin, Kernel function. Hyperplane refers to the decision boundary of the model, this could be a line if the data is 2 dimensional, plane if the data is 3 dimensional, or hyperplane if the data is n dimensional. Support Vectors refers to the data points that are nearest to the hyperplane and  these points are more difficult to classify. As shown in figure \ref{fig:svm}, the \acs{SVM} algorithm tries to find a hyperplane which maximizes the distance between the support vectors and the hyperplance and hence reducing the overfitting on the training set.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.4\textwidth]{svm}
+	\caption[Support Vector Machine]{Components of \acs{SVM} \citep{rani2022machine}}
+	\label{fig:svm}
+\end{figure}
+\acs{SVM} machinel learning technique uses a concept of Soft Margin to remove the issues that may arise due to outliers in the dataset.Additionally, if the decision boundary is non-linearly separable, \acs{SVM} transforms original data to map into new space using the Kernel function. Linear Kernel, Polynomial kernel \& \acf{RBF} are different kernel functions that can be used in \acs{SVM} model. There are multiple implementations of the \acs{SVM} technique is available; however, in this project libsvm\citep{chang2011libsvm} \& liblinear \citep{fan2008liblinear} is used as these implementations provide higher performance on large datasets.
+\subsection{Ensemble Learning}
+Ensemble methods are highly effective compared to the traditional machine learning techniques and considered state-of-the-art approach for solving many challenges \citep{sagi2018ensemble}. The idea behind ensemble learning technique is to train multiple base learners/models and combine the predictions from each learner to make the final prediction. As shown in figure \ref{fig:ensemble_learning}, ensemble techniques can be mainly categorized into 2 types Homogeneous \& Heterogeneous methods. In homogeneous methods all the base learners uses the same machine learning technique; on the other hand, heterogeneous methods may use different types machine learning techniques as the base learner.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{ensemble_learning}
+	\caption[Ensemble Learning Techniques]{Ensemble Learning Techniques \& Implementations}
+	\label{fig:ensemble_learning}
+\end{figure}
+\subsubsection{Bagging}
+Bagging is a Homogeneous Ensemble Method where the base learners are trained in parallel on the complete training set or a subset of training set based on the configuration. As depicted in figure \ref{fig:bagging_boosting}, initially creates multiple dataset through random sampling with replacement, then train the mutiple learners in parallel. Finally combine output from all learners using either taking average or using majority vote strategy based on the problem is being solved. 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{bagging_boosting}
+	\caption[Illustrations of bagging and boosting ensemble algorithms.]{Illustrations of bagging and boosting ensemble algorithms\citep{yang2019concepts}.}
+	\label{fig:bagging_boosting}
+\end{figure}
+\subsubsection{Boosting}
+Boosting is a Homogeneous Ensemble Method where the base learners are trained sequentially and the predictions from individual learners are combined to make the final prediction. The model starts by creating a base learner which performs slightly better than the random prediction, then subsequent learners try to improve on the prediction made by the previous learner. The process ends when the improvement made by the new learner is less than the threshold. As depicted in figure \ref{fig:bagging_boosting}, the boosting methods uses a weighted averaging strategy to combine the predictions from the individual learners. 
+\subsubsection{Stacking}
+Stacking is a Heterogeneous Ensemble Method where the output from the base learners is passed through another learner to make the final prediction. In Bagging \& Boosting methods the final prediction was made using taking average, majority voting, or weighted average; however the Stacking models uses a learner to make the final prediction. Figure \ref{fig:stacking} shows a sample Ensemble Stacking Model. Model A, B, and C are base learners which are trained parallely. The output from Model A, B \& C is then passed through a Generalizer/Meta Learner which predicts the final output. 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{stacking}
+	\caption[An example scheme of stacking ensemble learning. ]{An example scheme of stacking ensemble learning \cite{divina2018stacking}.}
+	\label{fig:stacking}
+\end{figure}
+
+\subsection{\acf{RF}}
+\acf{RF} is an ensemble bagging method technique which uses \acf{DT} to create base learners. \acs{DT} are a non-parametric supervised learning method used for classification and regression. The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features. \acs{RF} creates multiple \acs{DT} and trains each one of them with a random subsample of the dataset. The predictions from each \acs{DT} is then combined by either taking average or by using majority voting strategy.\\
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{random_forest}
+	\caption[An example \acs{RF}. ]{An example of \acf{RF} \cite{sapountzoglou2020fault}.}
+	\label{fig:random_forest}
+\end{figure}
+
 \subsection{\acf{GBDT}}
-\subsection{\acf{XGBoost}}
-\subsection{\acf{LGBM}}
+Gradient-boosted decision trees are a machine learning technique for optimizing the predictive value of a model through successive steps in the learning process. Each iteration of the decision tree involves adjusting the values of the coefficients, weights, or biases applied to each of the input variables being used to predict the target value, with the goal of minimizing the loss function (the measure of difference between the predicted and actual target values). The gradient is the incremental adjustment made in each step of the process; boosting is a method of accelerating the improvement in predictive accuracy to a sufficiently optimum value.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{gbdt}
+	\caption[Architecture of \acf{GBDT}]{Architecture of \acf{GBDT} \cite{deng2021ensemble}.}
+	\label{fig:gbdt}
+\end{figure}
+\subsubsection{\acf{XGBoost} \& \acf{LGBM}} \label{sec:xgboost_lgbm}
+\acf{XGBoost}\citep{chen2016xgboost} and \acf{LGBM}\citep{ke2017lightgbm} are two mostly used \acf{GBDT} framework/libraries which performs much better than the basic \acs{GBDT} models \citep{machado2019lightgbm}. \acf{XGBoost} \& \acs{LGBM} frameworks differ in how the individual weak learners are constructed. As shown in figure \ref{fig:lgbm_xgboost_tree_growth}, the \acs{XGBoost} uses Level Wise Tree Growth strategy while the \acs{LGBM} uses Leaf Wise Growth Strategy. \acf{GOSS} technique is used by the \acs{LGBM} to split the nodes while generating the individual weak learners; on the other hand, the \acs{XGBoost} uses Pre-Sorted and historgram based algorithms for splitting nodes.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{lgbm_xgboost_tree_growth}
+	\caption[\acs{XGBoost} Level wise tree growth and \acs{LGBM} Leaf wise tree growth.]{\acs{XGBoost} Level wise tree growth and \acs{LGBM} Leaf wise tree growth.\cite{rezazadeh2020generalized}.}
+	\label{fig:lgbm_xgboost_tree_growth}
+\end{figure}
+
+Both frameworks require the features to be numerical and does not support text features; thus; categorical encoding must be done before training \acs{LGBM} \& \acs{XGBoost} models.
+In addition, both these libraries are well optimized for parallel processing and hence can be used for large datasets.
+
 \subsection{\acf{ANN}}
+
 \subsection{\acf{GRU}}
+
 \subsection{Feature Selection}
+While building a Machine Learning model, all of the features might not contribute equivalently to the model's prediction performance, some of the features might impact the model's prediction performance adversely. This problem becomes more prominent on high dimensional data. The process of identifying the important features which improve the performance of the model is called Feature Selection. Two feature selection methods which were used in this project are Select From Model \& Sequential Feature Selection.
 \subsubsection{Select From Model}
+In this method, the training dataset is first trained on a machine learning model which is computationally less expensive and provides acceptable level of performance, this model can be considered as a filter. Then remove the features whose feature weights are less than the threshold value in the filter model. Finally, use the filtered dataset for training the main model. In this project, the \acs{SVM} is used as the filter model for training the main \acs{LGBM} model.
 \subsubsection{Sequential Feature Selection}
-\subsection{Ordinal Encoder}
-\subsection{Class Imbalance}
+As shown in figure \ref{fig:seq_feature_selection}, sequential feature selection starts with a subset of dataset and then an estimator chooses the best feature to add or remove to the dataset based on the \acf{CV} score obtained by adding/removing each feature. The process ends once the algorithm reaches the exit criteria. Exit criteria could be either the count of features or until improvement in performance gained by adding/removing features is not greater than a threshold.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{seq_feature_selection}
+	\caption[Sequential Feature Selection Flowchart]{Sequential Feature Selection Process\citep{beyan2015detection}}
+	\label{fig:seq_feature_selection}
+\end{figure}
+There are two types Sequential Feature Selection techniques, Forward Selection \& Backward Selection. In Forward Selection, the initial feature subset contains only one feature, then additional features are added based on \acs{CV} score until the exit criteria is met. On the other hand, in Backward Selection technique, the initial feature subset contains all the features, then the algorithm removes the features based on \acs{CV} score until the exit criteria is met. 
+\subsection{Encoding Categorical Features}
+As discussed in section \ref{sec:xgboost_lgbm}, some of the machine learning techniques does not support categorical text variables. Two most common methods used to encode categorical features are Ordinal Encoder \& One-hot encoder. Ordinal encoder is better than the One-hot encoder in memory efficiency.
+\subsubsection{Ordinal Encoder}
+In this method, the feature is transformed into a numerical value by assigning numbers to each distinct category. For eg: in Scikit Learn library the categorical variables low, medium, high will be transformed to 0, 1, 2; moreover, a default number can be assigned to categories which are not seen in the training dataset. 
+\subsubsection{One-hot Encoder}
+In this method, the categorical feature column is transformed into n different features each representing one distinct category. For eg: a feature X with low,medium,high as distinctive categorical values, will be transformed into 3 features X\_low, X\_medium, X\_high. X\_low will have a value of 1 if the X='low' for the record, likewise for the other features.
 \subsection{Data Oversampling}
+A classification data set with skewed class proportions is called imbalanced. Classes that make up a large proportion of the data set are called majority classes. Those that make up a smaller proportion are minority classes. Data sampling is a method used to overcome / reduce the effect of Class Imbalance on the performance of the model. There two types of Data Sampling, Over Sampling \& Under Sampling. Over Sampling techniques boost the minority class entries by introducing new records in minority class; on the other hand, the Under Sampling methods eliminates entries from majority class and makes the majority \& minority class entries to similar proportion.
+
+In this project, Data Oversampling techniques are used as the dataset is large. \acf{SMOTE} \citep{chawla2002smote} \&  KMeans \acs{SMOTE} \citep{last2017oversampling} are two different Oversampling methods which were explored in this project.
+
 \subsubsection{\acf{SMOTE}}
+\acs{SMOTE} method introduces new data points in the minority class by finding nearest neighbors and adding new data point along the line of nearest neighbor. Figure \ref{fig:smote} shows the \acs{SMOTE} process, in this picture green points are minority class \&  blue points are majority class. The algorithm first selects a data point from the minority class, then finds the K nearest neighbors among the minority class. Finally one of the K nearest neighbor is choosen randomly and a new synthetic minority class data point (red) is added along the straight line connecting the selected data point and the choosen nearest neighbor.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{smote}
+	\caption[\acs{SMOTE} algorithm]{\acs{SMOTE} algorithm \citep{schubachimbalance}}
+	\label{fig:smote}
+\end{figure}
 \subsubsection{KMeans \acs{SMOTE}}
+In KMeans \acs{SMOTE} method, the minority class is first passed through a KMeans clustering model before applying the \acs{SMOTE} algorithm. Clustering before applying \acs{SMOTE} helps to eliminate the problem of oversampling the outliers in the minority classes;moreover, clustering also helps to apply the \acs{SMOTE} algorithm for non-linearly separable data. As shown in  figure \ref{fig:kmeans_smote}, the SMOTE algorith is applied separately on each cluster.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{kmeans_smote}
+	\caption[KMeans \acs{SMOTE} algorithm]{KMeans \acs{SMOTE} Flowchart \citep{chen2021research}}
+	\label{fig:kmeans_smote}
+\end{figure}
+
 \subsection{Metrics}
+Figure \ref{fig:confusion_matrix} represents the Confusion Matrix associated with classification problem. There are 4 important terms related to confusion matrix, \acf{TP}, \acf{TN}, \acf{FP}, and \acf{FN}. \acs{TP} represents the predictions where the truth label and the predicted labels are both positive; on the other hand, \acs{FP} represents the predictions where the predicted label is predicted label is positive but the truth label is negative. \acs{TN} represents the predictions where both the predicted label and the truth label are Negative. Predictions where the predicted label is negative and the truth label is positive is called \acs{FN}.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{confusion_matrix}
+	\caption[Confusion Matrix]{Confusion Matrix \citep{confusion_matrix}}
+	\label{fig:confusion_matrix}
+\end{figure}
+There are multiple metrics based on the confusion matrix, metrics which are relevant to this project is discussed in below sections.
 \subsubsection{Accuracy}
-\subsubsection{F1-Score}
+\begin{equation}
+	Accuracy = \frac{TP+TN}{TP+TN+FP+FN}
+\end{equation}
 \subsubsection{Recall}
+\begin{equation}
+	Recall = \frac{TP}{TP+FN}
+\end{equation}
+\subsubsection{Precision}
+\begin{equation}
+	Precision = \frac{TP}{TP+FP}
+\end{equation}
+
+\subsubsection{F1-Score}
+\begin{equation}
+		Precision = 2 * \frac{Precision * Recall}{Precision + Recall}
+\end{equation}
 \subsection{\acf{CV}}
-\subsection{Bias \& Variance }
+\subsubsection{K-Fold \acs{CV}}
 \subsection{Hyper Parameter Tuning}
 \subsubsection{Grid Search CV}
 \subsection{Stochastic Gradient Descent}
@@ -287,8 +403,6 @@ This section provides the reader with the required background information on the
 \subsection{Binary Cross Entropy}
 \subsection{Summary}
 
-\vfill
-\clearpage
 \section{Literature Review}\label{sec:literature_review}
 \subsection{Introduction}
 This section discusses the current techniques used to predict the credit card default. Since the dataset used for these studies differ, a direct comparison of results is not possible. However, an overall comparison of different techniques and its efficiency in predicting the credit card default will be discussed wherever possible.
@@ -307,8 +421,7 @@ This section discusses the current techniques used to predict the credit card de
 \subsection{Summary}
 In conclusion, the ensemble boosting models generally provided better performance than the classic machine learning and deep learning techniques. The data under/over sampling had mixed performances depending on the dataset, some performed better with under/over sampling and some did not. Out of data under/over sampling techniques, KMeans \acs{SMOTE} performed better. Some studies used feature selection techniques in the data preprocessing techniques which improved the model efficiency. The studies discussed in the section used dataset which were imbalanced and  contained atmost 30,000 records; however, \citep{amex-default-prediction-dataset} contains 5 Million records and exploring the different techniques on such large scale dataset will help us to consolidate the understanding gained from these papers.
 
-\vfill
-\clearpage
+
 \section{Materials}\label{sec:materials}
 
 \subsection{Primary Dataset}
@@ -356,7 +469,7 @@ This section will first provide a brief overview of the overall strategy of the 
 Figure \ref{fig:methodology} represents a overview of methodology in general followed for conducting experiments. The dataset was first split into chunks and stored in different files in parquet format to optimize the memory usage. Then, dataset was preprocessed to remove invalid values and encode categorical text variables to numerical values. Followed by data pre-processing, the dataset was split into Training \& Test set, this ensures that none of the entries in test set will have an influence in model training and model selection process. Then the dataset was enhanced using oversampling techniques to resolve the class imbalance issue;in addition, feature selection techniques were used to eliminate the features from the dataset which were less important and hence contribute very little to model. 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=1.0\textwidth, height=0.5\textheight]{methodology}
+	\includegraphics[width=0.8\textwidth, height=0.5\textheight]{methodology}
 	\caption[Methodology]{Methodology followed for the experiments}
 	\label{fig:methodology}
 \end{figure}
@@ -573,7 +686,7 @@ The objective of this project was to explore different machine learning algorith
 
 Based on the above conclusion, an improved \& efficient model, Lean \acs{LGBM}, was proposed which uses 1/3rd of the features ( hence less dataset size) of the Secondary Dataset to provide performance on par with the \acs{LGBM} \& \acs{ANN} models. This Lean \acs{LGBM} model uses Feature Selection Techniques, Data Oversampling Technique(KMeans-\acs{SMOTE}) and Hyper Parameter tuning to obtain high performance with minimal computations. 
 
-In conclusion,   as reported in various studies \citep{alam2020investigation}, \citep{alam2020investigation}, \citep{emil2019enhancing}, the Ensemble Boosting techniques such as \acs{XGBoost} \& \acs{LGBM} provides best performance in terms of F1 Score \& computation for credit card default prediction problems. 
+In conclusion,   as reported in various studies \citep{alam2020investigation}, \citep{faraj2021comparison}, \citep{emil2019enhancing}, the Ensemble Boosting techniques such as \acs{XGBoost} \& \acs{LGBM} provides best performance in terms of F1 Score \& computation for credit card default prediction problems. 
 
 
 
@@ -595,4 +708,5 @@ In conclusion,   as reported in various studies \citep{alam2020investigation}, \
 
 \clearpage
 \end{document}
+
 
