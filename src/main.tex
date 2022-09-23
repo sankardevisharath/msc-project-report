@@ -345,7 +345,24 @@ While training \acs{ANN} models, a cost function is assigned to evaluate the per
 	\caption[Representation of Convergence of Cost Functions]{Representation of Convergence of Cost Functions\citep{ibm2022neural}}
 	\label{fig:cost_function}
 \end{figure}
-\subsection{\acf{GRU}}
+\subsection{\acf{RNN}}
+A \acf{RNN} is a type of \acs{ANN} which uses sequential data or time series data. \acs{RNN} has the capability of using previous inputs in the sequence to influence the current input and output, in other words, the \acs{RNN} has a memory of past events/data which it uses to calculate the current output.Figure \ref{fig:rnn_nn} shows comparison of a normal feed forward neural network and a \acs{RNN}. Traditional Deep Learning networks assumes no dependency between the inputs and outputs, however, the output of \acs{RNN} depends on the previous inputs in the sequence.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{rnn_nn}
+	\caption[Comparison of Recurrent Neural Networks (on the left) and Feedforward Neural Networks (on the right)]{Comparison of Recurrent Neural Networks (on the left) and Feedforward Neural Networks (on the right)\citep{ibm2022rnn}.}
+	\label{fig:rnn_nn}
+\end{figure}
+
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{rnn_rolled_unrolled}
+	\caption[\acs{RNN} rolled and unrolled]{\acs{RNN} rolled and unrolled \citep{ibm2022rnn}.}
+	\label{fig:rnn_rolled_unrolled}
+\end{figure}
+\subsubsection{\acf{GRU}}
+
 \acs{GRU}\citep{cho2014learning}
 
 \begin{figure}[ht]
