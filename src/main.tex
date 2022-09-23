@@ -292,7 +292,7 @@ Stacking is a Heterogeneous Ensemble Method where the output from the base learn
 \end{figure}
 
 \subsection{\acf{RF}}
-\acf{RF} is an ensemble bagging method technique which uses \acf{DT} to create base learners. \acs{DT} are a non-parametric supervised learning method used for classification and regression. The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features. \acs{RF} creates multiple \acs{DT} and trains each one of them with a random subsample of the dataset. The predictions from each \acs{DT} is then combined by either taking average or by using majority voting strategy.\\
+\acf{RF} \citep{breiman2001random} is an ensemble bagging method technique which uses \acf{DT} to create base learners. \acs{DT} are a non-parametric supervised learning method used for classification and regression. The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features. \acs{RF} creates multiple \acs{DT} and trains each one of them with a random subsample of the dataset. The predictions from each \acs{DT} is then combined by either taking average or by using majority voting strategy.\\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{random_forest}
@@ -322,9 +322,38 @@ Both frameworks require the features to be numerical and does not support text f
 In addition, both these libraries are well optimized for parallel processing and hence can be used for large datasets.
 
 \subsection{\acf{ANN}}
+\acs{ANN} are a subset of Machine Learning algorithms. The  architecture and name of \acs{ANN} is inspired by how the human brains works, specifically, how biological neurons signal to one another\citep{ibm2022neural}. Figure \ref{fig:ann} represents the architecture of a \acs{ANN} in general. The network consists of an input layer, multiple hidden layers and an output layer. There are multiple nodes, also known as neurons, in each layer. The neurons are the building blocks of the \acs{ANN} network. Each neuron connects to all the neurons in the next layer; moreover, neurons in the input layer are basically the input features.
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{ann}
+	\caption[Architecture of \acf{ANN}.]{Architecture of \acf{ANN}\cite{bre2018prediction}.}
+	\label{fig:ann}
+\end{figure}
+Neurons are the basic building block of an \acs{ANN}. As shown in figure \ref{ann_node}, each neuron at least consists of a learning function and an activation function. Learning function can be thought of as a simple logistic/linear regression model and the activation function can be though of as a gatekeeper which decides how much influence this neuron should have in the next layer. Commonly used activation functions are Sigmoid, \acs{ReLU} and tanh. 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{ann_node}
+	\caption[Representation of a Neuron in \acf{ANN}.]{Representation of a Neuron in \acf{ANN}.\cite{ghedira2004effect}}
+	\label{fig:ann_node}
+\end{figure}
+
+While training \acs{ANN} models, a cost function is assigned to evaluate the performance of the model, \acf{MSE}, Binary Cross Entropy are some of the cost functions which are generally used. Finally the weights learning function of each neuron is adjusted through an algorithm called Backpropogation based on the result of the cost function. The algorithm ends when the cost function converges (figure \ref{fig:cost_function}) and the improvement made to the performance is less than the threshold.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{cost_function}
+	\caption[Representation of Convergence of Cost Functions]{Representation of Convergence of Cost Functions\citep{ibm2022neural}}
+	\label{fig:cost_function}
+\end{figure}
 \subsection{\acf{GRU}}
+\acs{GRU}\citep{cho2014learning}
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{gru}
+	\caption[Representation of \acf{GRU} Network]{Representation of \acf{GRU} Network\citep{zhao2019evaluation}.}
+	\label{fig:gru}
+\end{figure}
 \subsection{Feature Selection}
 While building a Machine Learning model, all of the features might not contribute equivalently to the model's prediction performance, some of the features might impact the model's prediction performance adversely. This problem becomes more prominent on high dimensional data. The process of identifying the important features which improve the performance of the model is called Feature Selection. Two feature selection methods which were used in this project are Select From Model \& Sequential Feature Selection.
 \subsubsection{Select From Model}
@@ -377,21 +406,25 @@ Figure \ref{fig:confusion_matrix} represents the Confusion Matrix associated wit
 \end{figure}
 There are multiple metrics based on the confusion matrix, metrics which are relevant to this project is discussed in below sections.
 \subsubsection{Accuracy}
-\begin{equation}
+Accuracy is defined as the ratio of total number of correct predictions and total number of samples. However, the Accuracy metric might be misleading on imbalanced dataset;for example, in a dataset where the minority class is only one percent of the overall dataset, 99\% can be achieved by predicting every data point as majority class. Equation \ref{eq:accuracy} shows the formula for calculating Accuracy.
+\begin{equation} \label{eq:accuracy}
 	Accuracy = \frac{TP+TN}{TP+TN+FP+FN}
 \end{equation}
 \subsubsection{Recall}
-\begin{equation}
+Recall represents the ratio of total number of positive predictions and the total number of positive samples. Intuitively, Recall provides an idea of how many positive samples where correctly identified by the model;for example, in a credit card default prediction dataset, recall is how many of the defaulted customers were identified by the model. Equation \ref{eq:recall} shows the formula for calculating Recall.
+\begin{equation}\label{eq:recall}
 	Recall = \frac{TP}{TP+FN}
 \end{equation}
 \subsubsection{Precision}
-\begin{equation}
+Precision is defined as the ratio of correct positive predictions and the total number of positive predictions. Precision provides insight into how many of the predicted positive samples where actually correct.Equation \label{eq:precision} shows the formula for calculating Precision.
+\begin{equation}\label{eq:precision}
 	Precision = \frac{TP}{TP+FP}
 \end{equation}
 
 \subsubsection{F1-Score}
-\begin{equation}
-		Precision = 2 * \frac{Precision * Recall}{Precision + Recall}
+F1-Score combines both Precision \& Recall into a single metric;in other words, F1-Score is the harmonic mean of Precision and Recall metrics. F1-Score has shown to be a good metric on the imbalanced datasets classification problems. F1-Score better represents the performance of the model on the dataset compared to the other metrics. Equation \ref{eq:f1score} shows the formula for calculating the F1-Score.
+\begin{equation}\label{eq:f1score}
+	Precision = 2 * \frac{Precision*Recall}{Precision + Recall}
 \end{equation}
 \subsection{\acf{CV}}
 \subsubsection{K-Fold \acs{CV}}
