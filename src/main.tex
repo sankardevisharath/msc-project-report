@@ -28,6 +28,7 @@
 \usepackage[printonlyused]{acronym}
 \usepackage[table]{xcolor}
 \usepackage{subcaption}
+\usepackage{placeins}
 
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}	%from tex.stackexchange.com/questions/111361
@@ -345,8 +346,9 @@ While training \acs{ANN} models, a cost function is assigned to evaluate the per
 	\caption[Representation of Convergence of Cost Functions]{Representation of Convergence of Cost Functions\citep{ibm2022neural}}
 	\label{fig:cost_function}
 \end{figure}
+
 \subsection{\acf{RNN}}
-A \acf{RNN} is a type of \acs{ANN} which uses sequential data or time series data. \acs{RNN} has the capability of using previous inputs in the sequence to influence the current input and output, in other words, the \acs{RNN} has a memory of past events/data which it uses to calculate the current output.Figure \ref{fig:rnn_nn} shows comparison of a normal feed forward neural network and a \acs{RNN}. Traditional Deep Learning networks assumes no dependency between the inputs and outputs, however, the output of \acs{RNN} depends on the previous inputs in the sequence.
+A \acf{RNN} is a type of \acs{ANN} which uses sequential data or time series data. \acs{RNN} has the capability of using previous inputs in the sequence to influence the current input and output, in other words, the \acs{RNN} has a memory of past events/data which it uses to calculate the current output.Figure \ref{fig:rnn_nn} shows comparison of a normal feed forward neural network (Tradition Neural Network)  and a \acs{RNN}. In a Feed Forward Neural Network the signals flow only in one direction from input to output; however, In an \acs{RNN} output of a layer is added to the next input and fed back into the same layer.Traditional Deep Learning networks assumes no dependency between the inputs and outputs, on the other hand, the output of \acs{RNN} depends on the previous inputs in the sequence.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{rnn_nn}
@@ -354,23 +356,86 @@ A \acf{RNN} is a type of \acs{ANN} which uses sequential data or time series dat
 	\label{fig:rnn_nn}
 \end{figure}
 
-
+Consider the Credit Card Default problem with 12 month data, the Rolled \acs{RNN} represents the entire Neural Network, and the Unrolled \acs{RNN} represents each layer in the Neural Network or each time step. In credit card default problem, X\textsubscript{0}  represents the data for the first month, X\textsubscript{1} for the second month and so on. \acs{RNN} uses \acf{BPTT} algorithm and gradient descent to learn the weights of the model while training.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{rnn_rolled_unrolled}
 	\caption[\acs{RNN} rolled and unrolled]{\acs{RNN} rolled and unrolled \citep{ibm2022rnn}.}
 	\label{fig:rnn_rolled_unrolled}
 \end{figure}
-\subsubsection{\acf{GRU}}
 
-\acs{GRU}\citep{cho2014learning}
 
+There are 3 variants of the \acs{RNN} architectures as shown in figure \ref{fig:various_rnn}. While \acs{RNN} uses previous inputs to influence the current output, \acs{BRNN} use future inputs as well to improve the accuracy of the \acs{RNN} architecture. \acf{LSTM} is variant of \acs{RNN} proposed Sepp Hochreiter and Juergen Schmidhuber in their paper \citep{hochreiter1997long}. If the previous input which is influencing the current input is not in recent past, \acs{RNN} might not be able predict the current output accurately. \acs{LSTM} tries to solve this issue using cells in the hidden layers of the neural network. Cells have three different gates, input, output and forget gate, these gates control the flow of information which is needed to predict the output in the network. \acf{GRU} is similar to \acs{LSTM} and tries to resolve the issue of Short-term memory issue of \acs{RNN}. \acs{GRU} uses hidden states to regulate the information in the network and uses two gates, reset, update gate, to control the flow of information through network \citep{cho2014learning}.\\
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{gru}
-	\caption[Representation of \acf{GRU} Network]{Representation of \acf{GRU} Network\citep{zhao2019evaluation}.}
-	\label{fig:gru}
+	\includegraphics[width=0.7\textwidth]{various_rnn}
+	\caption[Variant \acs{RNN} Architectures]{Variant \acs{RNN} Architectures.}
+	\label{fig:various_rnn}
 \end{figure}
+
+\subsection{\acf{GRU}}
+
+\acf{GRU} is a variant of \acs{RNN} network which tries to solve the short-term memory issue of \acs{RNN} networks. Figure \ref{fig:gru_new} represents the structure for \acs{GRU} unit. Input to the current unit is the output hidden state from the previous input (h\textsubscript{t-1});furthermore, \acs{GRU} has two gates, update(z\textsubscript{t}) and reset(r\textsubscript{t}) gate. The algorithm uses reset gate to calculate the candidate output state (h\textsubscript{t}\textsuperscript{'}). Finally, update gate z\textsubscript{t}, previous hidden state h\textsubscript{t-1} and candidate output hidden state h\textsubscript{t}\textsuperscript{'} are used to calculate the final output hidden state h\textsubscript{t}.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{gru_new}
+	\caption[\acs{GRU} Architecture]{\acs{GRU} Architecture}
+	\label{fig:gru_new}
+\end{figure}
+
+Update gate is calculated using equation \ref{eq:gru_ugate} which is highlighted in figure \ref{fig:gru_detail} (a) of update gate. Update gate is formed adding the result of multiplication of  input x\textsubscript{t} with its own weight W\textsuperscript{z} and previous hidden state , h\textsubscript{t-1} with it's own weight U\textsuperscript{z}. Finally applying Sigmoid activation function to make the value between 0 and 1. Update gate determines how much of the information from the previous time steps needs to be passed to the future.
+\begin{equation} \label{eq:gru_ugate}
+	\centering
+	\includegraphics[width=0.7\textwidth]{gru_ugate_eq}	
+\end{equation}
+
+Reset gate is calculated using equation \ref{eq:gru_rgate} which is highlighted in figure \ref{fig:gru_detail} (b). Reset gate may seem similar to update gate by looking at the formula;;however, the important thing to note is that the weights are different for update \& reset gate and hence it learns different characteristics of the network. Reset gate determines how much of the memory from past inputs to forget.
+
+\begin{equation} \label{eq:gru_rgate}
+	\centering
+	\includegraphics[width=0.7\textwidth]{gru_reset_eq}	
+\end{equation}
+
+Calculation of new candidate output hidden state is shown in equation \ref{eq:gru_cstate_} and \ref{fig:gru_detail} (c). Both the input and previous output hidden state is multiplied by the respective weights before taking sum. Additionally, the product of previous hidden state and the weight is further multiplied (Hadamard Product) with the reset gate, this operation determines how much of the previous information to be passed over to the current output hidden state.
+\begin{equation} \label{eq:gru_cstate}
+	\centering
+	\includegraphics[width=0.7\textwidth]{gru_cstate_eq}	
+\end{equation}
+
+Finally the update gate, previous output hidden state and the candidate current output hidden state is used to calculate the final current output state as shown in equation \ref{eq:gru_nstate} and figure\ref{fig:gru_detail} (d). 
+\begin{equation} \label{eq:gru_nstate}
+	\centering
+	\includegraphics[width=0.7\textwidth]{gru_nstate_eq}	
+\end{equation}
+
+\begin{figure}[h!]
+	
+	\begin{subfigure}{0.49 \textwidth}
+		\includegraphics[width=1\linewidth, height=1\linewidth]{gru_ugate}
+		\subcaption[Update Gate]{Update Gate}
+		\label{fig:gru_ugate}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.49 \textwidth}
+		\includegraphics[width=1\linewidth, height=1\linewidth]{gru_rgate}
+		\caption[Reset Gate]{Reset Gate}
+		\label{fig:gru_rgate}
+	\end{subfigure}
+	\begin{subfigure}{0.49 \textwidth}
+		\includegraphics[width=1\linewidth, height=1\linewidth]{gru_cstate}
+		\caption[Candidate Output State]{Candiate Output State}
+		\label{fig:gru_cstate}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.49 \textwidth}
+		\includegraphics[width=1\linewidth, height=1\linewidth]{gru_nstate}
+		\caption[Final Output State]{Final Output State}
+		\label{fig:gru_nstate}
+	\end{subfigure}
+	\caption[\acs{GRU} Architecture Stepwise]{\acs{GRU} Architecture Stepwise \citep{simeon2017gru}}
+	\label{fig:gru_detail}
+\end{figure}
+
 \subsection{Feature Selection}
 While building a Machine Learning model, all of the features might not contribute equivalently to the model's prediction performance, some of the features might impact the model's prediction performance adversely. This problem becomes more prominent on high dimensional data. The process of identifying the important features which improve the performance of the model is called Feature Selection. Two feature selection methods which were used in this project are Select From Model \& Sequential Feature Selection.
 \subsubsection{Select From Model}
