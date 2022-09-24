@@ -145,19 +145,22 @@ Supervisor: \bhamsupervisor
 \end{titlepage}
 
 \section*{\centering Abstract}	
+Many studies related to Credit Card Default prediction have been conducted over the years; however, the datasets used in these studies are old and might not represent the current industry scenario. Due to the confidential nature of the data, there are not many Credit Card Default Prediction datasets are available in public domain and hence most of the studies ends up using the same old dataset. This study uses publicly available "American Express-Default Prediction" dataset which contains 5 Millon data records of 400,000 unique customers for the period 2018-19, to explore various Machine Learning, Ensemble Learning \& Deep Learning techniques for credit card default prediction problem. The dataset was trained on \acf{SVM}, \acf{RF}. \acf{GBDT}, \acf{XGBoost},\acf{LGBM}, \acf{ANN}, \acf{GRU}, and \acs{GRU}+\acs{ANN}+\acs{GBDT} models. \acs{LGBM} (81.01\%) \& \acs{ANN}(81.03\%) models provided highest F1-Scores while \acs{RF} (73.81\%) performed worst among all the models. Finally, a Lean \acs{LGBM} model was proposed for the industry  credit card default prediction use cases. The proposed model performs on par with \acs{LGBM} \& \acs{ANN} model and provides an F1-Score of 80.95\% while using less features and computational resources.\\
 
 
-% Taken from the MSc Thesis template, and edited for a PGT report
-The material contained within this report has not previously been
-submitted for a degree at the University of Birmingham or any other university.
-The research reported within this report has been conducted by the author
-unless indicated otherwise.\\
-\\
-\textbf{Keywords} Credit Card Default Prediction, Ensemble Learning
+
+\textbf{Keywords} Credit Card Default Prediction, Ensemble Learning, Deep Learning
 
 \vfill
 \clearpage
 
+\section*{\centering Acknowledgements}
+To begin, I would like to thank my supervisor, Dr. Kashif Rajpoot, for his help, guidance and
+advice throughout this project. Furthermore, I would like to thank Dr.Andrew NG whose Machine Learning course inspired me to pursue the MSc in AI \& CS.
+Finally, I would like to thank my family for their continued support and encouragement during the course, specifically my mother Remani M P, my wife Sruthi Devi and my daughter Heyza.
+
+\vfill
+\clearpage
 \section*{\centering Declaration}
 % Taken from the MSc Thesis template, and edited for a PGT report
 The material contained within this report has not previously been
@@ -219,6 +222,9 @@ unless indicated otherwise.\\
 \renewcommand{\headrulewidth}{0.4pt}
 
 \section{Introduction}
+
+
+
 This section will introduce the user to definitions of terms relevant for understanding the problem, discuss the motivation behind the problem, the aim \& approach taken to solve the problem, and the structure of this report. 
 
 
@@ -238,9 +244,10 @@ The percentage of credit card accounts within a financial institution's portfoli
 
 \subsubsection{Credit Card Default}
 The customer is considered as defaulting customer in the event of nonpayment of the due amount in 120 days after the latest statement date.
+\subsection{Overview}
+Bank's consider credit cards as a gateway for the customer. Once the customer purchases the credit card from the bank, the customer will use the Bank's mobile app or web banking platforms to check balance, pay bills or other tasks. This provides the bank an opportunity to cross-sell other products such as Loan, Deposits, Remittances etc to the customer; thus, Credit Cards are an important part of Bank's product portfolio. From a customer's perspective, credit cards provide liquidity, convenience and security. Hence, credit cards are beneficial to both customer and the bank; due to this, the adoption of credit cards by the customers are increasing rapidly.\\
 
-\subsection{Motivation}
-Delinquency rates \& credit card default rates are directly proportional. According to the  figure \ref{fig:fredgraph}, the delinquency rates were at an all-time high just before the recession started in 2008; moreover, this was the same time when more \& more customers began to default on credit card payments. 
+However, increased adoption of the credit card poses risk to the bank as the credit card default also increases along with the adoption. For example, just before 2008 recession the credit card adoption was all time high; despite this, according to the  figure \ref{fig:fredgraph}, the delinquency rates were at an all-time high just before the recession started in 2008. Bank's found it difficult to balance the books as more \& more customers started to default on the credit card payment after recession started.. After 2008 recession, strict regulations were introduced by the governments around the world to monitor the credit risk of the bank. One metric which is used to evaluate the risk is Delinquency rate of the bank, a low value for delinquency rate is preferred.\\
 
 Predicting credit defaults is essential for managing risk in the consumer lending industry. Credit default prediction enables lenders to make the best possible lending decisions, improving customer satisfaction and fostering strong company economics. \\
 
@@ -251,13 +258,16 @@ Predicting credit defaults is essential for managing risk in the consumer lendin
 	\label{fig:fredgraph}
 \end{figure}
 
+\subsection{Motivation}
+
 Existing models can be used to manage risk. However, developing models that perform better than those in use is feasible.
 
 \subsection{Aim \& Approach}
-The objective of this project was to explore different machine learning algorithms \& deep learning architectures on the American Express default prediction dataset\citep{amex-default-prediction-dataset} to predict if a customer will default on the payment in the future. The project work started by developing a model using classic machine learning algorithm \acf{SVM} followed by creating multiple models using Random Forest Classifier \& \acf{GBDT} algorithms. \acf{ANN}, \acf{GRU} \& Custom ensemble model created by model combining \acs{ANN}, \acs{GRU} and \acs{GBDT} were created as part of exploring deep learning architectures. Finally created a lean model, using less features \& optimzed parameters using \acs{GBDT} which provided comparable performances to the previously explored models.
+
+This study aims to evaluate the performance of different \acf{ML} \&  \acf{DL} techniques on an industry scale dataset for credit card default prediction. Initial task is to find a credit card default prediction dataset which represents the current real world industry scenario. Then conduct a literature review and identify the most used \acs{ML} \& \acs{DL} techniques for credit card default prediction. Train the identified models on the dataset and compare the results; additionally, apply feature selection \& data oversampling/undersampling techniques and hyperparameter tuning to enhance the performance of the model. Validate the results with the understanding received from literature review. Finally, propose/suggest a model architecture for industry use cases to predict credit card default.
 
 \subsection{Structure of Report}
-The remainder of the report is structured as follows: in Section \ref{sec:background_knowledge} background information on different machine learning \& deep learning algorithms along with metrics explanation is provided. Then in Section \ref{sec:literature_review} a literature review related to the credit card default prediction research is given. Section \ref{sec:materials} \& \ref{sec:methodology} provides detailed explanations on the dataset, tools \& software used in the project, and methodology followed for creating the models. Model evaluation results and the comparison is given in Section \ref{sec:results_discussions}. Finally Section \ref{sec:conclusion} discusses the conclusion of the project. 
+The remainder of the report is structured as follows: in Section \ref{sec:background_knowledge} background information on different machine learning \& deep learning algorithms along with some data pre-processing techniques is provided. Then in Section \ref{sec:literature_review} a literature review related to the credit card default prediction research is given. Section \ref{sec:materials} \& \ref{sec:methodology} provides detailed explanations on the dataset, tools \& software used in the project, and methodology followed for creating the models. Model evaluation results and the comparison is given in Section \ref{sec:results_discussions}. Finally Section \ref{sec:conclusion} discusses the conclusion of the project. 
 \vfill
 \clearpage
 \section{Background Knowledge} \label{sec:background_knowledge}
@@ -659,7 +669,7 @@ Figure \ref{fig:gru_arch} represents the architecture of the GRU based model for
 	\caption[GRU Model Architecture]{GRU Model Architecture\\}
 	\label{fig:gru_arch}
 \end{figure}
-\subsection{Model 8 - Ensemble Stacking Model using \acs{ANN} + \acs{GRU} + \acs{GBDT}}
+\subsection{Model 8 - Ensemble Stacking Model using \acs{GRU}+\acs{ANN}+\acs{GBDT}}
 Figure \ref{fig:gru_nn_gbdt_arch} partially depicts the architecture of the custom ensemble stacking model. The primary dataset is first trained using \acs{GRU} layer followed by a dense layer. In parallel, the secondary dataset is trained using a 2 dense layers. Then the output of these two parallel legs were combined to form the concatenation layer. The output of concatenation layer is then trained using a  \acs{GBDT} model to get the final prediction. Adam optimizer was used to optimze the objective binary cross entropy loss function. Instead of loading complete dataset into memory and train the entire dataset in one go, a dataset generator was written to return chunks of data for training, this helped to eliminate the memory overflow issues.\\
 \begin{figure}[ht]
 	\centering
