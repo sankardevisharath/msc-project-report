@@ -35,6 +35,8 @@
 	citecolor={blue!50!black},
 	urlcolor={blue!80!black}
 }
+
+
 \pagestyle{fancy}
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}	%from tex.stackexchange.com/questions/111361
 
@@ -145,7 +147,7 @@ Supervisor: \bhamsupervisor
 \end{titlepage}
 
 \section*{\centering Abstract}	
-Many studies related to Credit Card Default prediction have been conducted over the years; however, the datasets used in these studies are old and might not represent the current industry scenario. Due to the confidential nature of the data, there are not many Credit Card Default Prediction datasets are available in public domain and hence most of the studies ends up using the same old dataset. This study uses publicly available "American Express-Default Prediction" dataset which contains 5 Millon data records of 400,000 unique customers for the period 2018-19, to explore various Machine Learning, Ensemble Learning \& Deep Learning techniques for credit card default prediction problem. The dataset was trained on \acf{SVM}, \acf{RF}. \acf{GBDT}, \acf{XGBoost},\acf{LGBM}, \acf{ANN}, \acf{GRU}, and \acs{GRU}+\acs{ANN}+\acs{GBDT} models. \acs{LGBM} (81.01\%) \& \acs{ANN}(81.03\%) models provided highest F1-Scores while \acs{RF} (73.81\%) performed worst among all the models. Finally, a Lean \acs{LGBM} model was proposed for the industry  credit card default prediction use cases. The proposed model performs on par with \acs{LGBM} \& \acs{ANN} model and provides an F1-Score of 80.95\% while using less features and computational resources.\\
+Many studies related to Credit Card Default prediction have been conducted over the years; however, the datasets used in these studies are old and might not represent the current industry scenario and consumer behavior. Due to the confidential nature of the data, there are not many Credit Card Default Prediction datasets are available in public domain and hence most of the studies ends up using the same old dataset. This study uses publicly available "American Express-Default Prediction" dataset which contains 5 Millon data records of 400,000 unique customers for the period 2017-18, to explore various Machine Learning, Ensemble Learning \& Deep Learning techniques for credit card default prediction problem. The dataset was trained on \acf{SVM}, \acf{RF}. \acf{GBDT}, \acf{XGBoost},\acf{LGBM}, \acf{ANN}, \acf{GRU}, and \acs{GRU}+\acs{ANN}+\acs{GBDT} models. \acs{LGBM} (81.01\%) \& \acs{ANN}(81.03\%) models provided highest F1-Scores while \acs{RF} (73.81\%) performed worst among all the models. Finally, a Lean \acs{LGBM} model was proposed for the industry  credit card default prediction use cases. The proposed model performs on par with \acs{LGBM} \& \acs{ANN} model and provides an F1-Score of 80.95\% while using less features and computational resources.\\
 
 
 
@@ -157,7 +159,7 @@ Many studies related to Credit Card Default prediction have been conducted over 
 \section*{\centering Acknowledgements}
 To begin, I would like to thank my supervisor, Dr. Kashif Rajpoot, for his help, guidance and
 advice throughout this project. Furthermore, I would like to thank Dr.Andrew NG whose Machine Learning course inspired me to pursue the MSc in AI \& CS.
-Finally, I would like to thank my family for their continued support and encouragement during the course, specifically my mother Remani M P, my wife Sruthi Devi and my daughter Heyza.
+Finally, I would like to thank my family for their continued support and encouragement during the course, specifically my mother Remani M P, my better half Sruthi Devi and my precious daughter Heyza.
 
 \vfill
 \clearpage
@@ -180,7 +182,7 @@ unless indicated otherwise.\\
 
 %\centering \Large{``Steam engines don't answer back.\\ You can belt them with a hammer and they say nowt."}\\{\normalsize{\textsc{Fred Dibnah}}, \emph{Steeplejack and Engineer}} \vspace{2cm}
 
-\centering \Large{``You have to learn the rules of the game.\\ And then you have to play better than anyone else"}\\{\normalsize{\textsc{Albert Einstein}}}
+\centering \Large{``Intelligence is the ability to adapt to change."}\\{\normalsize{\textsc{ Stephen Hawking}}}
 
   \end{minipage}
   \vspace*{\fill}
@@ -223,8 +225,6 @@ unless indicated otherwise.\\
 
 \section{Introduction}
 
-
-
 This section will introduce the user to definitions of terms relevant for understanding the problem, discuss the motivation behind the problem, the aim \& approach taken to solve the problem, and the structure of this report. 
 
 
@@ -245,9 +245,13 @@ The percentage of credit card accounts within a financial institution's portfoli
 \subsubsection{Credit Card Default}
 The customer is considered as defaulting customer in the event of nonpayment of the due amount in 120 days after the latest statement date.
 \subsection{Overview}
-Bank's consider credit cards as a gateway for the customer. Once the customer purchases the credit card from the bank, the customer will use the Bank's mobile app or web banking platforms to check balance, pay bills or other tasks. This provides the bank an opportunity to cross-sell other products such as Loan, Deposits, Remittances etc to the customer; thus, Credit Cards are an important part of Bank's product portfolio. From a customer's perspective, credit cards provide liquidity, convenience and security. Hence, credit cards are beneficial to both customer and the bank; due to this, the adoption of credit cards by the customers are increasing rapidly.\\
+Credit Cards are an important part of Bank's product portfolio Bank's consider credit cards as a gateway for the customer. Once the customer purchases the credit card from the bank, the customer will use the Bank's mobile app or web banking platforms to check balance, pay bills or other tasks. This provides the bank an opportunity to cross-sell other products such as Loan, Deposits, Remittances etc to the customer, thus increasing the customer profitability. On the other hand, from a customer's perspective, credit cards provide liquidity for cash management, convenience of use and security. Hence, credit cards are beneficial to both customer and the bank; due to this, the adoption of credit cards by the customers are increasing rapidly in the past years and it is project to increase in coming years also \citep{global2022cardpayments}.\\
 
-However, increased adoption of the credit card poses risk to the bank as the credit card default also increases along with the adoption. For example, just before 2008 recession the credit card adoption was all time high; despite this, according to the  figure \ref{fig:fredgraph}, the delinquency rates were at an all-time high just before the recession started in 2008. Bank's found it difficult to balance the books as more \& more customers started to default on the credit card payment after recession started.. After 2008 recession, strict regulations were introduced by the governments around the world to monitor the credit risk of the bank. One metric which is used to evaluate the risk is Delinquency rate of the bank, a low value for delinquency rate is preferred.\\
+However, increased adoption of the credit card poses risk to the bank as the credit card default also increases along with the adoption. For example, just before 2008 recession the credit card adoption was all time high; despite this, according to the  figure \ref{fig:fredgraph}, the delinquency rates were also at an all-time high just before the recession started in 2008. Bank's found it difficult to balance the accounting books as more \& more customers started to default on the credit card payment after recession started.. Strict regulations were introduced by the governments around the world to monitor the credit risk of the bank after 2008 recession. One metric which is used to evaluate the risk is Delinquency rate of the bank, a low value for delinquency rate is preferred.\\
+
+Additionally, Banks try to identify the customers who might default in the future so that Bank can limit the cross-selling risk, ie, if a customer is going to default the credit card payment, then bank can either reject the loan request from the customer or provide the loan with higher interest rate to limit the risk. Furthermore, if the bank can identify the defaulting customer as early as possible, bank can offer to restructure the debt of the customer to make the payments in multiple installments over a period. This helps to maximize the debt recovery  amount by minimally impacting the customer's cashflow. 
+
+The attributes related to Delinquency plays an important role in predicting the credit card default. A Delinquent account has higher probability of default than a Non-delinquent account; moreover, the delinquent accounts are put in different buckets such as 30-Day Delinquent, 60-Day Delinquent, 90-Day Delinquent etc, probability of default is directly proportional to number of day the account is in Delinquent status. Other attributes which are commonly used for predicting the credit card default is payment history, balance history and credit score of customer.\\
 
 Predicting credit defaults is essential for managing risk in the consumer lending industry. Credit default prediction enables lenders to make the best possible lending decisions, improving customer satisfaction and fostering strong company economics. \\
 
@@ -257,10 +261,9 @@ Predicting credit defaults is essential for managing risk in the consumer lendin
 	\caption[Delinquency rate on credit card loans for the period 1992-2022]{Delinquency rate on credit card loans for the period 1992-2022{\citep{fedgraph_delinquency_history}}.}
 	\label{fig:fredgraph}
 \end{figure}
-
+\FloatBarrier
 \subsection{Motivation}
-
-Existing models can be used to manage risk. However, developing models that perform better than those in use is feasible.
+The credit card data is confidential, any data leakage could result in serious consequences such as money theft, identity theft, reputational damage etc. Due to this, there are not many credit card default prediction datasets available in public domain. Several studies conducted over the years uses Taiwan Clients Dataset \citep{yeh2009comparisons} Dataset, which is released in 2009 with the data from 2004-05 and contains 30,000 records and 24 features. Since the dataset is old and contains minimal records and features, it might not represent the current world scenario where there have been an exponential increase in credit card holders since 2005. The consumer behavior also changes over time, which might impact the credit card default prediction task; furthermore, due to the advancements financial industry and digitization, it is now possible to extract more features which may aid the credit card default prediction and improve the predictive accuracy. Evidently, a study which uses recent dataset which reflects the current industry scenarios is crucial to understand \& validate the insights gained from the previous studies.\\
 
 \subsection{Aim \& Approach}
 
@@ -271,75 +274,79 @@ The remainder of the report is structured as follows: in Section \ref{sec:backgr
 \vfill
 \clearpage
 \section{Background Knowledge} \label{sec:background_knowledge}
-This section provides the reader with the required background information on the machine learning algorithms, deep learning architectures, data preprocessing techniques \& model evaluation metrics. The explanations provided in this section are at intutive level only without going deeper into the mathematical formulation.
+This section provides the reader with the required background information on the machine learning algorithms, deep learning architectures, data pre-processing techniques \& model evaluation metrics. The explanations provided in this section are at intuitive level only without going deeper into the mathematical formulation.
 \subsection{\acf{SVM}}
-\acs{SVM} is a reliable classification and regression machine learning algorithm that maximizes the accuracy of a model without overfitting the training data. There are 4 main components to the \acs{SVM} model, Hyperplane, Support Vectors, Margin, Kernel function. Hyperplane refers to the decision boundary of the model, this could be a line if the data is 2 dimensional, plane if the data is 3 dimensional, or hyperplane if the data is n dimensional. Support Vectors refers to the data points that are nearest to the hyperplane and  these points are more difficult to classify. As shown in figure \ref{fig:svm}, the \acs{SVM} algorithm tries to find a hyperplane which maximizes the distance between the support vectors and the hyperplance and hence reducing the overfitting on the training set.
+\acs{SVM} is a reliable classification and regression machine learning algorithm that maximizes the accuracy of a model without overfitting the training data. There are 4 main components to the \acs{SVM} model, Hyperplane, Support Vectors, Margin, Kernel function. Hyperplane refers to the decision boundary of the model, this could be a line if the data is 2 dimensional, plane if the data is 3 dimensional, or hyperplane if the data is n dimensional. Support Vectors refers to the data points that are nearest to the hyperplane and  these points are more difficult to classify. As shown in figure \ref{fig:svm}, the \acs{SVM} algorithm tries to find a hyperplane which maximizes the distance between the support vectors and the hyperplane and hence reducing the overfitting on the training set.\\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.4\textwidth]{svm}
 	\caption[Support Vector Machine]{Components of \acs{SVM} \citep{rani2022machine}}
 	\label{fig:svm}
 \end{figure}
+\FloatBarrier
 \acs{SVM} machinel learning technique uses a concept of Soft Margin to remove the issues that may arise due to outliers in the dataset.Additionally, if the decision boundary is non-linearly separable, \acs{SVM} transforms original data to map into new space using the Kernel function. Linear Kernel, Polynomial kernel \& \acf{RBF} are different kernel functions that can be used in \acs{SVM} model. There are multiple implementations of the \acs{SVM} technique is available; however, in this project libsvm\citep{chang2011libsvm} \& liblinear \citep{fan2008liblinear} is used as these implementations provide higher performance on large datasets.
 \subsection{Ensemble Learning}
 Ensemble methods are highly effective compared to the traditional machine learning techniques and considered state-of-the-art approach for solving many challenges \citep{sagi2018ensemble}. The idea behind ensemble learning technique is to train multiple base learners/models and combine the predictions from each learner to make the final prediction. As shown in figure \ref{fig:ensemble_learning}, ensemble techniques can be mainly categorized into 2 types Homogeneous \& Heterogeneous methods. In homogeneous methods all the base learners uses the same machine learning technique; on the other hand, heterogeneous methods may use different types machine learning techniques as the base learner.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{ensemble_learning}
+	\includegraphics[width=1\textwidth]{ensemble_learning}
 	\caption[Ensemble Learning Techniques]{Ensemble Learning Techniques \& Implementations}
 	\label{fig:ensemble_learning}
 \end{figure}
+\FloatBarrier
 \subsubsection{Bagging}
-Bagging is a Homogeneous Ensemble Method where the base learners are trained in parallel on the complete training set or a subset of training set based on the configuration. As depicted in figure \ref{fig:bagging_boosting}, initially creates multiple dataset through random sampling with replacement, then train the mutiple learners in parallel. Finally combine output from all learners using either taking average or using majority vote strategy based on the problem is being solved. 
+Bagging is a Homogeneous Ensemble Method where the base learners are trained in parallel on the complete training set or a subset of training set based on the configuration. As depicted in figure \ref{fig:bagging_boosting}, initially creates multiple dataset through random sampling with replacement, then train the mutiple learners in parallel. Finally combine output from all learners using either taking average or using majority vote strategy based on the problem is being solved. \\
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{bagging_boosting}
+	\includegraphics[width=1\textwidth]{bagging_boosting}
 	\caption[Illustrations of bagging and boosting ensemble algorithms.]{Illustrations of bagging and boosting ensemble algorithms\citep{yang2019concepts}.}
 	\label{fig:bagging_boosting}
 \end{figure}
+\FloatBarrier
 \subsubsection{Boosting}
 Boosting is a Homogeneous Ensemble Method where the base learners are trained sequentially and the predictions from individual learners are combined to make the final prediction. The model starts by creating a base learner which performs slightly better than the random prediction, then subsequent learners try to improve on the prediction made by the previous learner. The process ends when the improvement made by the new learner is less than the threshold. As depicted in figure \ref{fig:bagging_boosting}, the boosting methods uses a weighted averaging strategy to combine the predictions from the individual learners. 
 \subsubsection{Stacking}
-Stacking is a Heterogeneous Ensemble Method where the output from the base learners is passed through another learner to make the final prediction. In Bagging \& Boosting methods the final prediction was made using taking average, majority voting, or weighted average; however the Stacking models uses a learner to make the final prediction. Figure \ref{fig:stacking} shows a sample Ensemble Stacking Model. Model A, B, and C are base learners which are trained parallely. The output from Model A, B \& C is then passed through a Generalizer/Meta Learner which predicts the final output. 
+Stacking is a Heterogeneous Ensemble Method where the output from the base learners is passed through another learner to make the final prediction. In Bagging \& Boosting methods the final prediction was made using taking average, majority voting, or weighted average; however the Stacking models uses a learner to make the final prediction. Figure \ref{fig:stacking} shows a sample Ensemble Stacking Model. Model A, B, and C are base learners which are trained parallely. The output from Model A, B \& C is then passed through a Generalizer/Meta Learner which predicts the final output. \\
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{stacking}
+	\includegraphics[width=0.6\textwidth]{stacking}
 	\caption[An example scheme of stacking ensemble learning. ]{An example scheme of stacking ensemble learning \cite{divina2018stacking}.}
 	\label{fig:stacking}
 \end{figure}
-
+\FloatBarrier
 \subsection{\acf{RF}}
 \acf{RF} \citep{breiman2001random} is an ensemble bagging method technique which uses \acf{DT} to create base learners. \acs{DT} are a non-parametric supervised learning method used for classification and regression. The goal is to create a model that predicts the value of a target variable by learning simple decision rules inferred from the data features. \acs{RF} creates multiple \acs{DT} and trains each one of them with a random subsample of the dataset. The predictions from each \acs{DT} is then combined by either taking average or by using majority voting strategy.\\
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{random_forest}
+	\includegraphics[width=1\textwidth]{random_forest}
 	\caption[An example \acs{RF}. ]{An example of \acf{RF} \cite{sapountzoglou2020fault}.}
 	\label{fig:random_forest}
 \end{figure}
-
+\FloatBarrier
 \subsection{\acf{GBDT}}
-Gradient-boosted decision trees are a machine learning technique for optimizing the predictive value of a model through successive steps in the learning process. Each iteration of the decision tree involves adjusting the values of the coefficients, weights, or biases applied to each of the input variables being used to predict the target value, with the goal of minimizing the loss function (the measure of difference between the predicted and actual target values). The gradient is the incremental adjustment made in each step of the process; boosting is a method of accelerating the improvement in predictive accuracy to a sufficiently optimum value.
+Gradient-boosted decision trees are a machine learning technique for optimizing the predictive value of a model through successive steps in the learning process. Each iteration of the decision tree involves adjusting the values of the coefficients, weights, or biases applied to each of the input variables being used to predict the target value, with the goal of minimizing the loss function (the measure of difference between the predicted and actual target values). The gradient is the incremental adjustment made in each step of the process; boosting is a method of accelerating the improvement in predictive accuracy to a sufficiently optimum value.\\
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{gbdt}
+	\includegraphics[width=1\textwidth]{gbdt}
 	\caption[Architecture of \acf{GBDT}]{Architecture of \acf{GBDT} \cite{deng2021ensemble}.}
 	\label{fig:gbdt}
 \end{figure}
+\FloatBarrier
 \subsubsection{\acf{XGBoost} \& \acf{LGBM}} \label{sec:xgboost_lgbm}
-\acf{XGBoost}\citep{chen2016xgboost} and \acf{LGBM}\citep{ke2017lightgbm} are two mostly used \acf{GBDT} framework/libraries which performs much better than the basic \acs{GBDT} models \citep{machado2019lightgbm}. \acf{XGBoost} \& \acs{LGBM} frameworks differ in how the individual weak learners are constructed. As shown in figure \ref{fig:lgbm_xgboost_tree_growth}, the \acs{XGBoost} uses Level Wise Tree Growth strategy while the \acs{LGBM} uses Leaf Wise Growth Strategy. \acf{GOSS} technique is used by the \acs{LGBM} to split the nodes while generating the individual weak learners; on the other hand, the \acs{XGBoost} uses Pre-Sorted and historgram based algorithms for splitting nodes.
+\acf{XGBoost}\citep{chen2016xgboost} and \acf{LGBM}\citep{ke2017lightgbm} are two mostly used \acf{GBDT} framework/libraries which performs much better than the basic \acs{GBDT} models \citep{machado2019lightgbm}. \acf{XGBoost} \& \acs{LGBM} frameworks differ in how the individual weak learners are constructed. As shown in figure \ref{fig:lgbm_xgboost_tree_growth}, the \acs{XGBoost} uses Level Wise Tree Growth strategy while the \acs{LGBM} uses Leaf Wise Growth Strategy. \acf{GOSS} technique is used by the \acs{LGBM} to split the nodes while generating the individual weak learners; on the other hand, the \acs{XGBoost} uses Pre-Sorted and historgram based algorithms for splitting nodes.\\
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{lgbm_xgboost_tree_growth}
-	\caption[\acs{XGBoost} Level wise tree growth and \acs{LGBM} Leaf wise tree growth.]{\acs{XGBoost} Level wise tree growth and \acs{LGBM} Leaf wise tree growth.\cite{rezazadeh2020generalized}.}
+	\caption[\acs{XGBoost} Level wise tree growth and \acs{LGBM} Leaf wise tree growth visualization.]{\acs{XGBoost} Level wise tree growth and \acs{LGBM} Leaf wise tree growth visualization.\cite{rezazadeh2020generalized}.}
 	\label{fig:lgbm_xgboost_tree_growth}
 \end{figure}
-
+\FloatBarrier
 Both frameworks require the features to be numerical and does not support text features; thus; categorical encoding must be done before training \acs{LGBM} \& \acs{XGBoost} models.
 In addition, both these libraries are well optimized for parallel processing and hence can be used for large datasets.
 
 \subsection{\acf{ANN}}
-\acs{ANN} are a subset of Machine Learning algorithms. The  architecture and name of \acs{ANN} is inspired by how the human brains works, specifically, how biological neurons signal to one another\citep{ibm2022neural}. Figure \ref{fig:ann} represents the architecture of a \acs{ANN} in general. The network consists of an input layer, multiple hidden layers and an output layer. There are multiple nodes, also known as neurons, in each layer. The neurons are the building blocks of the \acs{ANN} network. Each neuron connects to all the neurons in the next layer; moreover, neurons in the input layer are basically the input features.
+\acs{ANN} are a subset of Machine Learning algorithms. The  architecture and name of \acs{ANN} is inspired by how the human brains works, specifically, how biological neurons signal to one another\citep{ibm2022neural}. Figure \ref{fig:ann} represents the architecture of a \acs{ANN} in general. The network consists of an input layer, multiple hidden layers and an output layer. There are multiple nodes, also known as neurons, in each layer. The neurons are the building blocks of the \acs{ANN} network. Each neuron connects to all the neurons in the next layer; moreover, neurons in the input layer are basically the input features.//
 
 \begin{figure}[ht]
 	\centering
@@ -347,40 +354,41 @@ In addition, both these libraries are well optimized for parallel processing and
 	\caption[Architecture of \acf{ANN}.]{Architecture of \acf{ANN}\cite{bre2018prediction}.}
 	\label{fig:ann}
 \end{figure}
-Neurons are the basic building block of an \acs{ANN}. As shown in figure \ref{ann_node}, each neuron at least consists of a learning function and an activation function. Learning function can be thought of as a simple logistic/linear regression model and the activation function can be though of as a gatekeeper which decides how much influence this neuron should have in the next layer. Commonly used activation functions are Sigmoid, \acs{ReLU} and tanh. 
+\FloatBarrier
+Neurons are the basic building block of an \acs{ANN}. As shown in figure \ref{fig:ann_node}, each neuron at least consists of a learning function and an activation function. Learning function can be thought of as a simple logistic/linear regression model and the activation function can be though of as a gatekeeper which decides how much influence this neuron should have in the next layer. Commonly used activation functions are Sigmoid, \acs{ReLU} and tanh. \\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{ann_node}
 	\caption[Representation of a Neuron in \acf{ANN}.]{Representation of a Neuron in \acf{ANN}.\cite{ghedira2004effect}}
 	\label{fig:ann_node}
 \end{figure}
+\FloatBarrier
 
-While training \acs{ANN} models, a cost function is assigned to evaluate the performance of the model, \acf{MSE}, Binary Cross Entropy are some of the cost functions which are generally used. Finally the weights learning function of each neuron is adjusted through an algorithm called Backpropogation based on the result of the cost function. The algorithm ends when the cost function converges (figure \ref{fig:cost_function}) and the improvement made to the performance is less than the threshold.
+While training \acs{ANN} models, a cost function is assigned to evaluate the performance of the model, \acf{MSE}, Binary Cross Entropy are some of the cost functions which are generally used. Finally the weights learning function of each neuron is adjusted through an algorithm called Backpropogation based on the result of the cost function. The algorithm ends when the cost function converges (figure \ref{fig:cost_function}) and the improvement made to the performance is less than the threshold.\\
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{cost_function}
+	\includegraphics[width=0.4\textwidth]{cost_function}
 	\caption[Representation of Convergence of Cost Functions]{Representation of Convergence of Cost Functions\citep{ibm2022neural}}
 	\label{fig:cost_function}
 \end{figure}
-
+\FloatBarrier
 \subsection{\acf{RNN}}
-A \acf{RNN} is a type of \acs{ANN} which uses sequential data or time series data. \acs{RNN} has the capability of using previous inputs in the sequence to influence the current input and output, in other words, the \acs{RNN} has a memory of past events/data which it uses to calculate the current output.Figure \ref{fig:rnn_nn} shows comparison of a normal feed forward neural network (Tradition Neural Network)  and a \acs{RNN}. In a Feed Forward Neural Network the signals flow only in one direction from input to output; however, In an \acs{RNN} output of a layer is added to the next input and fed back into the same layer.Traditional Deep Learning networks assumes no dependency between the inputs and outputs, on the other hand, the output of \acs{RNN} depends on the previous inputs in the sequence.
+A \acf{RNN} is a type of \acs{ANN} which uses sequential data or time series data. \acs{RNN} has the capability of using previous inputs in the sequence to influence the current input and output, in other words, the \acs{RNN} has a memory of past events/data which it uses to calculate the current output.Figure \ref{fig:rnn_nn} shows comparison of a normal feed forward neural network (Tradition Neural Network)  and a \acs{RNN}. In a Feed Forward Neural Network the signals flow only in one direction from input to output; however, In an \acs{RNN} output of a layer is added to the next input and fed back into the same layer.Traditional Deep Learning networks assumes no dependency between the inputs and outputs, on the other hand, the output of \acs{RNN} depends on the previous inputs in the sequence.\\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{rnn_nn}
 	\caption[Comparison of Recurrent Neural Networks (on the left) and Feedforward Neural Networks (on the right)]{Comparison of Recurrent Neural Networks (on the left) and Feedforward Neural Networks (on the right)\citep{ibm2022rnn}.}
 	\label{fig:rnn_nn}
 \end{figure}
-
-Consider the Credit Card Default problem with 12 month data, the Rolled \acs{RNN} represents the entire Neural Network, and the Unrolled \acs{RNN} represents each layer in the Neural Network or each time step. In credit card default problem, X\textsubscript{0}  represents the data for the first month, X\textsubscript{1} for the second month and so on. \acs{RNN} uses \acf{BPTT} algorithm and gradient descent to learn the weights of the model while training.
+\FloatBarrier
+Consider the Credit Card Default problem with 12 month data, the Rolled \acs{RNN} represents the entire Neural Network, and the Unrolled \acs{RNN} represents each layer in the Neural Network or each time step. In credit card default problem, X\textsubscript{0}  represents the data for the first month, X\textsubscript{1} for the second month and so on. \acs{RNN} uses \acf{BPTT} algorithm and gradient descent to learn the weights of the model while training.\\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{rnn_rolled_unrolled}
-	\caption[\acs{RNN} rolled and unrolled]{\acs{RNN} rolled and unrolled \citep{ibm2022rnn}.}
+	\caption[\acs{RNN} rolled and unrolled visualization]{\acs{RNN} rolled and unrolled visualization \citep{ibm2022rnn}.}
 	\label{fig:rnn_rolled_unrolled}
 \end{figure}
-
-
+\FloatBarrier
 There are 3 variants of the \acs{RNN} architectures as shown in figure \ref{fig:various_rnn}. While \acs{RNN} uses previous inputs to influence the current output, \acs{BRNN} use future inputs as well to improve the accuracy of the \acs{RNN} architecture. \acf{LSTM} is variant of \acs{RNN} proposed Sepp Hochreiter and Juergen Schmidhuber in their paper \citep{hochreiter1997long}. If the previous input which is influencing the current input is not in recent past, \acs{RNN} might not be able predict the current output accurately. \acs{LSTM} tries to solve this issue using cells in the hidden layers of the neural network. Cells have three different gates, input, output and forget gate, these gates control the flow of information which is needed to predict the output in the network. \acf{GRU} is similar to \acs{LSTM} and tries to resolve the issue of Short-term memory issue of \acs{RNN}. \acs{GRU} uses hidden states to regulate the information in the network and uses two gates, reset, update gate, to control the flow of information through network \citep{cho2014learning}.\\
 \begin{figure}[ht]
 	\centering
@@ -388,42 +396,22 @@ There are 3 variants of the \acs{RNN} architectures as shown in figure \ref{fig:
 	\caption[Variant \acs{RNN} Architectures]{Variant \acs{RNN} Architectures.}
 	\label{fig:various_rnn}
 \end{figure}
-
+\FloatBarrier
 \subsection{\acf{GRU}}
 
 \acf{GRU} is a variant of \acs{RNN} network which tries to solve the short-term memory issue of \acs{RNN} networks. Figure \ref{fig:gru_new} represents the structure for \acs{GRU} unit. Input to the current unit is the output hidden state from the previous input (h\textsubscript{t-1});furthermore, \acs{GRU} has two gates, update(z\textsubscript{t}) and reset(r\textsubscript{t}) gate. The algorithm uses reset gate to calculate the candidate output state (h\textsubscript{t}\textsuperscript{'}). Finally, update gate z\textsubscript{t}, previous hidden state h\textsubscript{t-1} and candidate output hidden state h\textsubscript{t}\textsuperscript{'} are used to calculate the final output hidden state h\textsubscript{t}.
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.7\textwidth]{gru_new}
+	\includegraphics[width=0.6\textwidth]{gru_new}
 	\caption[\acs{GRU} Architecture]{\acs{GRU} Architecture \citep{simeon2017gru}}
 	\label{fig:gru_new}
 \end{figure}
-
+\FloatBarrier
 Update gate is calculated using equation \ref{eq:gru_ugate} which is highlighted in figure \ref{fig:gru_detail} (a) of update gate. Update gate is formed adding the result of multiplication of  input x\textsubscript{t} with its own weight W\textsuperscript{z} and previous hidden state , h\textsubscript{t-1} with it's own weight U\textsuperscript{z}. Finally applying Sigmoid activation function to make the value between 0 and 1. Update gate determines how much of the information from the previous time steps needs to be passed to the future.
 \begin{equation} \label{eq:gru_ugate}
 	\centering
 	\includegraphics[width=0.7\textwidth]{gru_ugate_eq}	
 \end{equation}
-
-Reset gate is calculated using equation \ref{eq:gru_rgate} which is highlighted in figure \ref{fig:gru_detail} (b). Reset gate may seem similar to update gate by looking at the formula;;however, the important thing to note is that the weights are different for update \& reset gate and hence it learns different characteristics of the network. Reset gate determines how much of the memory from past inputs to forget.
-
-\begin{equation} \label{eq:gru_rgate}
-	\centering
-	\includegraphics[width=0.7\textwidth]{gru_reset_eq}	
-\end{equation}
-
-Calculation of new candidate output hidden state is shown in equation \ref{eq:gru_cstate} and \ref{fig:gru_detail} (c). Both the input and previous output hidden state is multiplied by the respective weights before taking sum. Additionally, the product of previous hidden state and the weight is further multiplied (Hadamard Product) with the reset gate, this operation determines how much of the previous information to be passed over to the current output hidden state.
-\begin{equation} \label{eq:gru_cstate}
-	\centering
-	\includegraphics[width=0.7\textwidth]{gru_cstate_eq}	
-\end{equation}
-
-Finally the update gate, previous output hidden state and the candidate current output hidden state is used to calculate the final current output state as shown in equation \ref{eq:gru_nstate} and figure\ref{fig:gru_detail} (d). 
-\begin{equation} \label{eq:gru_nstate}
-	\centering
-	\includegraphics[width=0.7\textwidth]{gru_nstate_eq}	
-\end{equation}
-
 \begin{figure}[h!]
 	
 	\begin{subfigure}{0.49 \textwidth}
@@ -451,19 +439,40 @@ Finally the update gate, previous output hidden state and the candidate current 
 	\caption[\acs{GRU} Architecture Stepwise]{\acs{GRU} Architecture Stepwise \citep{simeon2017gru}}
 	\label{fig:gru_detail}
 \end{figure}
+\FloatBarrier
+Reset gate is calculated using equation \ref{eq:gru_rgate} which is highlighted in figure \ref{fig:gru_detail} (b). Reset gate may seem similar to update gate by looking at the formula;;however, the important thing to note is that the weights are different for update \& reset gate and hence it learns different characteristics of the network. Reset gate determines how much of the memory from past inputs to forget.
+
+\begin{equation} \label{eq:gru_rgate}
+	\centering
+	\includegraphics[width=0.7\textwidth]{gru_reset_eq}	
+\end{equation}
+
+Calculation of new candidate output hidden state is shown in equation \ref{eq:gru_cstate} and \ref{fig:gru_detail} (c). Both the input and previous output hidden state is multiplied by the respective weights before taking sum. Additionally, the product of previous hidden state and the weight is further multiplied (Hadamard Product) with the reset gate, this operation determines how much of the previous information to be passed over to the current output hidden state.
+\begin{equation} \label{eq:gru_cstate}
+	\centering
+	\includegraphics[width=0.7\textwidth]{gru_cstate_eq}	
+\end{equation}
+
+Finally the update gate, previous output hidden state and the candidate current output hidden state is used to calculate the final current output state as shown in equation \ref{eq:gru_nstate} and figure\ref{fig:gru_detail} (d). 
+\begin{equation} \label{eq:gru_nstate}
+	\centering
+	\includegraphics[width=0.7\textwidth]{gru_nstate_eq}	
+\end{equation}
+
 
 \subsection{Feature Selection}
 While building a Machine Learning model, all of the features might not contribute equivalently to the model's prediction performance, some of the features might impact the model's prediction performance adversely. This problem becomes more prominent on high dimensional data. The process of identifying the important features which improve the performance of the model is called Feature Selection. Two feature selection methods which were used in this project are Select From Model \& Sequential Feature Selection.
 \subsubsection{Select From Model}
 In this method, the training dataset is first trained on a machine learning model which is computationally less expensive and provides acceptable level of performance, this model can be considered as a filter. Then remove the features whose feature weights are less than the threshold value in the filter model. Finally, use the filtered dataset for training the main model. In this project, the \acs{SVM} is used as the filter model for training the main \acs{LGBM} model.
 \subsubsection{Sequential Feature Selection}
-As shown in figure \ref{fig:seq_feature_selection}, sequential feature selection starts with a subset of dataset and then an estimator chooses the best feature to add or remove to the dataset based on the \acf{CV} score obtained by adding/removing each feature. The process ends once the algorithm reaches the exit criteria. Exit criteria could be either the count of features or until improvement in performance gained by adding/removing features is not greater than a threshold.
+As shown in figure \ref{fig:seq_feature_selection}, sequential feature selection starts with a subset of dataset and then an estimator chooses the best feature to add or remove to the dataset based on the \acf{CV} score obtained by adding/removing each feature. The process ends once the algorithm reaches the exit criteria. Exit criteria could be either the count of features or until improvement in performance gained by adding/removing features is not greater than a threshold.\\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{seq_feature_selection}
 	\caption[Sequential Feature Selection Flowchart]{Sequential Feature Selection Process\citep{beyan2015detection}}
 	\label{fig:seq_feature_selection}
 \end{figure}
+\FloatBarrier
 There are two types Sequential Feature Selection techniques, Forward Selection \& Backward Selection. In Forward Selection, the initial feature subset contains only one feature, then additional features are added based on \acs{CV} score until the exit criteria is met. On the other hand, in Backward Selection technique, the initial feature subset contains all the features, then the algorithm removes the features based on \acs{CV} score until the exit criteria is met. 
 \subsection{Encoding Categorical Features}
 As discussed in section \ref{sec:xgboost_lgbm}, some of the machine learning techniques does not support categorical text variables. Two most common methods used to encode categorical features are Ordinal Encoder \& One-hot encoder. Ordinal encoder is better than the One-hot encoder in memory efficiency.
@@ -477,7 +486,7 @@ A classification data set with skewed class proportions is called imbalanced. Cl
 In this project, Data Oversampling techniques are used as the dataset is large. \acf{SMOTE} \citep{chawla2002smote} \&  K-Means \acs{SMOTE} \citep{last2017oversampling} are two different Oversampling methods which were explored in this project.
 
 \subsubsection{\acf{SMOTE}}
-\acs{SMOTE} method introduces new data points in the minority class by finding nearest neighbors and adding new data point along the line of nearest neighbor. Figure \ref{fig:smote} shows the \acs{SMOTE} process, in this picture green points are minority class \&  blue points are majority class. The algorithm first selects a data point from the minority class, then finds the K nearest neighbors among the minority class. Finally one of the K nearest neighbor is choosen randomly and a new synthetic minority class data point (red) is added along the straight line connecting the selected data point and the choosen nearest neighbor.
+\acs{SMOTE} method introduces new data points in the minority class by finding nearest neighbors and adding new data point along the line of nearest neighbor. Figure \ref{fig:smote} shows the \acs{SMOTE} process, in this picture green points are minority class \&  blue points are majority class. The algorithm first selects a data point from the minority class, then finds the K nearest neighbors among the minority class. Finally one of the K nearest neighbor is choosen randomly and a new synthetic minority class data point (red) is added along the straight line connecting the selected data point and the choosen nearest neighbor.\\
 
 \begin{figure}[ht]
 	\centering
@@ -485,15 +494,17 @@ In this project, Data Oversampling techniques are used as the dataset is large. 
 	\caption[\acs{SMOTE} algorithm]{\acs{SMOTE} algorithm \citep{schubachimbalance}}
 	\label{fig:smote}
 \end{figure}
+\FloatBarrier
 \subsubsection{K-Means \acs{SMOTE}}
-In K-Means \acs{SMOTE} method, the minority class is first passed through a K-Means clustering model before applying the \acs{SMOTE} algorithm. Clustering before applying \acs{SMOTE} helps to eliminate the problem of oversampling the outliers in the minority classes;moreover, clustering also helps to apply the \acs{SMOTE} algorithm for non-linearly separable data. As shown in  figure \ref{fig:kmeans_smote}, the SMOTE algorith is applied separately on each cluster.
+
+In K-Means \acs{SMOTE} method, the minority class is first passed through a K-Means clustering model before applying the \acs{SMOTE} algorithm. Clustering before applying \acs{SMOTE} helps to eliminate the problem of oversampling the outliers in the minority classes;moreover, clustering also helps to apply the \acs{SMOTE} algorithm for non-linearly separable data. As shown in  figure \ref{fig:kmeans_smote}, the SMOTE algorith is applied separately on each cluster.\\
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{kmeans_smote}
+	\includegraphics[width=0.7\textwidth]{kmeans_smote}
 	\caption[K-Means \acs{SMOTE} algorithm]{K-Means \acs{SMOTE} Flowchart \citep{chen2021research}}
 	\label{fig:kmeans_smote}
 \end{figure}
-
+\FloatBarrier
 \subsection{\acf{CV}}
 
 \acf{CV} is a model evaluation technique where a subset of the training dataset is removed and kept for evaluation and optimization of the model. Its a common practice to split the dataset into 3 set, Training, Validation \& Test set. Training set is used to build the model; on the other hand, Validation set is used to optimize the model parameters built on the Training set. Test set is used to evaluate the performance of the final model;importantly, it is assumed that the Test set has no influence on the model creation \& optimization and it is unseen while the model is trained and optimized.\\
@@ -503,7 +514,7 @@ In K-Means \acs{SMOTE} method, the minority class is first passed through a K-Me
 	\caption[A sample Train,Validation \& Test Split]{A sample Train,Validation \& Test Split}
 	\label{fig:dataset_split}
 \end{figure}
-
+\FloatBarrier
 Figure \ref{fig:cv_techniques} shows different Cross-Validation techniques, all these technique differs on how it selects/creates the validation set. For eg: Leave One Out Cross-Validation technique selects one data record from the Training set as the Validation set (without replacement) and the rest is used for training, this process is repeated n times ( number of data records in Traning set). The model evaluation metric collected in each iteration and the average of collected metric taken to get the final value of metric. Section \ref{sec:holdout} \& \ref{sec:kfold} will present couple of \acs{CV} techniques used in this project.\\
 \begin{figure}[ht]
 	\centering
@@ -511,20 +522,20 @@ Figure \ref{fig:cv_techniques} shows different Cross-Validation techniques, all 
 	\caption[Different Cross-Validation Techniques]{Different Cross-Validation Techniques}
 	\label{fig:cv_techniques}
 \end{figure}
-
+\FloatBarrier
 \subsubsection{Holdout \acs{CV}}\label{sec:holdout}
 In this method, the Training set is split randomly into two set, one split is used to train the model and other is used as the Validation set to evaluate the model. Generally, the training split is larger than the Validation split. This method is commonly used if the dataset is large and balanced. This is because if the dataset is large, other cross-validation techniques will be more expensive to run;also, if the dataset is large, the model can generalize well using the training set itself and leaving out few entries for validation will not cause huge decline in performance.
 \subsubsection{K-Fold \acs{CV}}\label{sec:kfold}
 In this method, the Training set is split into K equal partitions, and then one partition is taken as validation set and the remaining partitions used to build the model. This process is repeated for every partition, ie, the process is repeated K times, each time taking a different partition as the validation set. This method is commonly used if the dataset size is moderate or to boost the performance of the model by training on the entire Training set. However, K-Fold \acs{CV} is computationally expensive as the model will be trained 5 times with different subset of data.
 \subsection{Hyperparameter Tuning}
-Every Machine Learning technique provides choices/parameters while creating model architecture to tune the algorithm to specific use cases. For eg: in \acf{RF} algorithm, the number of weak learners is a hyperparameter, a user can try different values for number of weak learners to see which value provides best performance for the model. Another example is number of layers in an \acf{ANN}, user can try different number of layers to tune the performance of the model. The process of trying different values for hyperparameters to find the best model architecture is known as Hyperparameter Tuning. The entire Training set, including the validation set, is trained on the model using best hyperparameters found using Hyperaparameter Tuning process to get the final model. Figure \ref{fig:hyperparameter_tuning_methods} shows different techniques used for the Hyperparameter tuning process.
+Every Machine Learning technique provides choices/parameters while creating model architecture to tune the algorithm to specific use cases. For eg: in \acf{RF} algorithm, the number of weak learners is a hyperparameter, a user can try different values for number of weak learners to see which value provides best performance for the model. Another example is number of layers in an \acf{ANN}, user can try different number of layers to tune the performance of the model. The process of trying different values for hyperparameters to find the best model architecture is known as Hyperparameter Tuning. The entire Training set, including the validation set, is trained on the model using best hyperparameters found using Hyperaparameter Tuning process to get the final model. Figure \ref{fig:hyperparameter_tuning_methods} shows different techniques used for the Hyperparameter tuning process.\\
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{hyperparameter_tuning_methods}
 	\caption[A sample Train,Validation \& Test Split]{A sample Train,Validation \& Test Split}
 	\label{fig:hyperparameter_tuning_methods}
 \end{figure}
-
+\FloatBarrier
 
 \subsubsection{Grid Search} \label{sec:grid_search}
 In this method, the model is trained using each possible combination of hyperparameters and the best model is the one which scores the highest value for the chosen metrics on the Validation set. The choices for hyperparameters are discrete; for example, X \& Y  are two hyperparameters for the model Z, choices for X = [1, 2, 3] \& Y=[4, 5, 6], then Grid Search algorithm will train the model on every possible combination of X \& Y and will find the best combination of X \& Y which provides the highest performance. Grid Search \acs{CV} is an API in Scikit Learn Libray which uses K-Fold Validation technique to assess the performance of the model while performing Grid Search algorithm for hyperparameter tuning.
@@ -567,7 +578,7 @@ A recent study \citep{wu2022cdgat} developed a method called \acf{CDGAT}. The da
 \citep{lawi2018classification} conducted a study comparing performance of the models \acs{SVM},\acf{LS-SVM} \citep{suykens1999least}  and an ensemble model based on \acs{LS-SVM}  on Taiwan Clients Dataset (30000 records) \citep{yeh2009comparisons}. The results shows that the \acs{LS-SVM} performed better on Sensitivity metric than the \acs{SVM} model. The \acs{LS-SVM} Ensemble did not improve the Sensitivity of the prediction from the \acs{LS-SVM} model; however, the \acs{LS-SVM} model provided the best score on Specificity. \\
 
 \subsection{Summary}
-In conclusion, the ensemble boosting models generally provided better performance than the classic machine learning and deep learning techniques on Credit Card Default prediction problem. The data Under/Over sampling had mixed impact on the predictive accuracy depending on the dataset, some models performed really better with Under/Over sampling and some did not. Out of all the data Under/Over sampling techniques, K-Means \acs{SMOTE} performed better. Some studies used feature selection techniques in the data pre-processing pipeline which improved the model efficiency. Most of the studies on the credit card default problem uses Taiwan Clients Dataset (30000 records) \citep{yeh2009comparisons} which only contains 30,000 records and the data is from period 2004-2005; however, this dataset does not completely represent today's industry scenario and the challenges where banks have millions of records which can aid the credit card default prediction. Also the consumer behavior might have changed over the time;hence, study of Credit Card Default problem on large scale \& recent data has significance in the current landscape. American Express Default Predition  dataset \citep{amex-default-prediction-dataset} contains 5 Million records of 400,000 unique customers from the period 2018-19, and exploring the different techniques on such large scale dataset will help to consolidate the understanding gained from these papers.
+In conclusion, the ensemble boosting models generally provided better performance than the classic machine learning and deep learning techniques on Credit Card Default prediction problem. The data Under/Over sampling had mixed impact on the predictive accuracy depending on the dataset, some models performed really better with Under/Over sampling and some did not. Out of all the data Under/Over sampling techniques, K-Means \acs{SMOTE} performed better. Some studies used feature selection techniques in the data pre-processing pipeline which improved the model efficiency. Most of the studies on the credit card default problem uses Taiwan Clients Dataset (30000 records) \citep{yeh2009comparisons} which only contains 30,000 records and the data is from period 2004-2005; however, this dataset does not completely represent today's industry scenario and the challenges where banks have millions of records which can aid the credit card default prediction. Also the consumer behavior might have changed over the time;hence, study of Credit Card Default problem on large scale \& recent data has significance in the current landscape. American Express Default Predition  dataset \citep{amex-default-prediction-dataset} contains 5 Million records of 400,000 unique customers from the period 2017-18, and exploring the different techniques on such large scale dataset will help to consolidate the understanding gained from these papers.
 
 \vfill
 \clearpage
@@ -584,8 +595,30 @@ The primary dataset contains 190 aggregated profile features of 458913 American 
 	\item R\_* = Risk variables	
 \end{itemize}
 
-This dataset\citep{amex-default-prediction-dataset} was released as part of the "American Express - Default Prediction" hosted in Kaggle by the American Express team.
+This dataset\citep{amex-default-prediction-dataset} was released as part of the "American Express - Default Prediction" hosted in Kaggle by the American Express team. Figure \ref{fig:dataset_dist} shows the class distribution in the dataset; evidently, the dataset is mildly imbalanced.Figure \ref{fig:dataset_dist_monthwise} shows the distribution of the data records month wise, it can be seen that every month contains approximately same amount of data records. Figure \ref{fig:dist_class_monthwise} shows the distribution of classes month-wise, clearly, every month in the dataset has approximately same amount of entries for each classes. Overall the dataset quality is good and well represents the current real world scenario.\\
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.4\textwidth]{dataset_dist}
+	\caption[Distribution of Classes in Dataset]{Distribution of Classes in Datasets ( 0-Non Default, 1-Defaulted)}
+	\label{fig:dataset_dist}
+\end{figure}
+\FloatBarrier
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{dataset_dist_monthwise}
+	\caption[Distribution of Dataset Month-wise]{Distribution of Dataset Month-wise.}
+	\label{fig:dataset_dist_monthwise}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.7\textwidth]{dist_class_monthwise}
+	\caption[Distribution of Dataset Month-wise]{Distribution of Dataset Month-wise.}
+	\label{fig:dist_class_monthwise}
+\end{figure}
+\FloatBarrier
 \subsection{Secondary Dataset}
 The secondary dataset was derived from primary dataset by applying the below mathematical aggregate operations to the numerical features.
 \begin{itemize}
@@ -613,8 +646,7 @@ The primary programming language used for the implementation of this project is 
 \section{Methodology}\label{sec:methodology}
 \subsection{Introduction}
 This section will first provide a brief overview of the overall strategy of the experiments performed as part of this project followed by  providing detailed explanation on the data preprocessing techniques used. Then in subsequent sections each experiment/model will be presented along with the model specific explanations \& details.
-\vfill
-\clearpage
+
 \subsection{Overview of Methodology Followed}
 Figure \ref{fig:methodology} represents a overview of methodology in general followed for conducting experiments. The dataset was first split into chunks and stored in different files in parquet format to optimize the memory usage. Then, dataset was preprocessed to remove invalid values and encode categorical text variables to numerical values. Followed by data pre-processing, the dataset was split into Training \& Test set, this ensures that none of the entries in test set will have an influence in model training and model selection process. Then the dataset was enhanced using oversampling techniques to resolve the class imbalance issue;in addition, feature selection techniques were used to eliminate the features from the dataset which were less important and hence contribute very little to model. 
 \begin{figure}[ht]
@@ -623,7 +655,7 @@ Figure \ref{fig:methodology} represents a overview of methodology in general fol
 	\caption[Methodology]{Methodology followed for the experiments}
 	\label{fig:methodology}
 \end{figure}
-
+\FloatBarrier
 After the feature selection, the model was created and then passed through a Hyperparameter tuning pipeline which helps to find the best parameters for the model which would give highest cross validation score. Finally the entire training dataset was trained on the best model found using hyperparameter tuning and the model was evaluated using the test set set aside at the beginning of the experiment.
 
 \subsection{Data Preprocessing} 
@@ -659,7 +691,7 @@ Figure \ref{fig:nn_arch} depicts the architecture of the custom \acs{ANN} model 
 	\caption[Custom Neural Network Architecture]{Custom Neural Network Architecture}
 	\label{fig:nn_arch}
 \end{figure}
-
+\FloatBarrier
 \subsection{Model 7 - \acf{GRU}}
 Figure \ref{fig:gru_arch} represents the architecture of the GRU based model for predicting credit card default. The primary dataset is used for training this model;furthermore, the tanh function is used as the activation function and sigmoid  is used as the recurrent activation function  for the GRU layer. Dropout of 10\%, recurrent dropout of 50\% added to reduce the overfitting problem. The output of the GRU layer is then fed to dense layer followed by another dense layer with activation sigmoid for making final prediction. Optimizer used is Adam \& the loss function is Binary Cross Entropy. A dataset generator was created to provide input to the model in chunks, this helped to eliminate the memory issues while training. The final model contains 49165 trainable parameters.\\
 
@@ -669,6 +701,7 @@ Figure \ref{fig:gru_arch} represents the architecture of the GRU based model for
 	\caption[GRU Model Architecture]{GRU Model Architecture\\}
 	\label{fig:gru_arch}
 \end{figure}
+\FloatBarrier
 \subsection{Model 8 - Ensemble Stacking Model using \acs{GRU}+\acs{ANN}+\acs{GBDT}}
 Figure \ref{fig:gru_nn_gbdt_arch} partially depicts the architecture of the custom ensemble stacking model. The primary dataset is first trained using \acs{GRU} layer followed by a dense layer. In parallel, the secondary dataset is trained using a 2 dense layers. Then the output of these two parallel legs were combined to form the concatenation layer. The output of concatenation layer is then trained using a  \acs{GBDT} model to get the final prediction. Adam optimizer was used to optimze the objective binary cross entropy loss function. Instead of loading complete dataset into memory and train the entire dataset in one go, a dataset generator was written to return chunks of data for training, this helped to eliminate the memory overflow issues.\\
 \begin{figure}[ht]
@@ -677,6 +710,7 @@ Figure \ref{fig:gru_nn_gbdt_arch} partially depicts the architecture of the cust
 	\caption[Custom Ensemble Stacking Model Architecture]{Custom Ensemble Stacking Model Architecture}
 	\label{fig:gru_nn_gbdt_arch}
 \end{figure}
+\FloatBarrier
 \subsection{Model 9 - Lean \acs{LGBM} Model}
 Finally, a lean model was created using \acs{LGBM} model which peformed on par with the other models but with less resources \& data. Firstly the 20\% of the dataset was set aside as test set and remaining 80\% for training purpose. Training dataset was then oversampled using K-Means \acs{SMOTE} method which resulted in the number of defaulting customers \& non defaulting customers to become equal. Secondly the the training dataset was trained using a simple \acs{SVM} model to extract the feature importances; in addition, the features with feature importance weight less than the mean of importance of weights were discarded. This helped to reduced the feature count from 920 in the secondary dataset to 279. This modified dataset was then passed through a Grid Search CV pipeline to choose the best parameters for maximum depth \& maximum number of leafs for base learner trees, and boosting type. \acf{CV} Recall score was used as the metric to choose the best model. Finally, a \acs{LGBM} model was created using the best model parameters found using GridSearchCV and trained the same on the complete training dataset. The final model was tested and evaluated on the test set.
 
@@ -696,7 +730,7 @@ Figure \ref{fig:confusion_matrix} represents the Confusion Matrix associated wit
 	\caption[Confusion Matrix of A Binary Classification Problem]{Confusion Matrix of A Binary Classification Problem\citep{confusion_matrix}}
 	\label{fig:confusion_matrix}
 \end{figure}
-
+\FloatBarrier
 There are multiple metrics which can be used to evaluate the performance of the model based on the confusion matrix, metrics which are relevant to this project is discussed in below sections.
 \subsubsection{Accuracy}
 Accuracy is defined as the ratio of total number of correct predictions and total number of samples. However, the Accuracy metric might be misleading on imbalanced dataset;for example, in a dataset where the minority class is only one percent of the overall dataset, 99\% accuracy can be achieved by predicting every data point as the majority class. Equation \ref{eq:accuracy} shows the formula for calculating Accuracy.
@@ -774,9 +808,6 @@ The \acs{SVM} provided an accuracy of 87.24\% \& F1 score of 74.66 which was imp
 		\label{table:trainable_params}
 	\end{center}
 \end{table}
-
-The proposed Lean \acs{LGBM} model provides a F1 Score of 80.95 which is only 0.08 less than the best performing \acs{ANN} model; furthermore, the Lean \acs{LGBM} provided the best Precision score among all the models. Lean \acs{LGBM} model uses only 1/3rd of the features used by the \acs{ANN} model and still provides comparable performance. The figure \ref{fig:cm_ml} represents the confusion matrix of all the Machine Learning models explored during this project.
-
 \begin{figure}[h!]
 	
 	\begin{subfigure}{0.4 \textwidth}
@@ -807,7 +838,7 @@ The proposed Lean \acs{LGBM} model provides a F1 Score of 80.95 which is only 0.
 		\label{fig:cm_lgbm}
 	\end{subfigure}
 	\hfill
-		\begin{subfigure}{0.4 \textwidth}
+	\begin{subfigure}{0.4 \textwidth}
 		\includegraphics[width=1\linewidth, height=0.8\linewidth]{cm_lean_lgbm}
 		\caption[Lean Light Gradient Boosting Machine]{Lean LGBM}
 		\label{fig:cm_lean_lgbm}
@@ -815,8 +846,11 @@ The proposed Lean \acs{LGBM} model provides a F1 Score of 80.95 which is only 0.
 	\caption[Confusion Matrix of Models]{Confusion Matrix Models}
 	\label{fig:cm_ml}
 \end{figure}
+\FloatBarrier
+The proposed Lean \acs{LGBM} model provides a F1 Score of 80.95 which is only 0.08 less than the best performing \acs{ANN} model; furthermore, the Lean \acs{LGBM} provided the best Precision score among all the models. Lean \acs{LGBM} model uses only 1/3rd of the features used by the \acs{ANN} model and still provides comparable performance. The figure \ref{fig:cm_ml} represents the confusion matrix of all the Machine Learning models explored during this project.\\
+
 \subsubsection{Feature Importance} \label{subsec:feature_imp}
-The table \ref{table:imp_features} represents the features that contribute most to the predictive accuracy of the Lean \acs{LGBM} model. Interpretability  of the Lean \acs{LGBM} model is an another advantage over the \acs{ANN} model. However, since the features in the Primary \& Secondary Dataset is anonymized, it is not possible to know the exact real world meaning of these features in this study.
+The table \ref{table:imp_features} represents the features that contribute most to the predictive accuracy of the Lean \acs{LGBM} model. It can be seen that Delinquency related feature D\_139\_last contributes most to model followed by payment \& balance related features. Though interpretability  of the Lean \acs{LGBM} model is an advantage over the \acs{ANN} model, since the features in the Primary \& Secondary Dataset is anonymized, it is not possible to know the exact real world meaning of these features in this study. \\
 
 \begin{table}[h]
 	\begin{center}
@@ -871,7 +905,7 @@ Finally, the limitations related to the data sampling, feature selection, huge d
 \vfill
 \clearpage
 \section{Conclusion}\label{sec:conclusion}
-This study aimed to evaluate the performance of different Machine Learning and Deep Learning techniques on an industry scale dataset for Credit Card Default prediction. The American Express - Default Prediction Dataset \citep{amex-default-prediction-dataset} was chosen as Primary Dataset for the experiments as the dataset contained 5 Million records from year 2018-19; in addition, a Secondary Dataset was created from the Primary Dataset using feature engineering techniques. The dataset was trained on 8 different models(5 Machine Learning \& 3 Deep Learning models); moreover, Early Stopping technique in \acs{ML} \& Dropouts in \acs{DL} were used to avoid overfitting issues of the model. In the pre-processing pipeline of the model, K-Means \acs{SMOTE} Data Oversampling techniques were used to mitigate the Class Imbalance issue. \acs{LGBM} model provided the highest F1-Score of 81.01\% among the \acs{ML} models; on the other hand, \acs{ANN} model scored highest F1-Score of 81.03\% among the \acs{DL} models. Evidently, the performance improvement obtained by using \acs{ANN} is not significant compared to \acs{LGBM} model. Based on this observation, a Lean \acs{LGBM} model was proposed for industry use cases. The proposed model uses K-Means \acs{SMOTE} for Data Oversampling, Select From Model technique for Feature Selection/Dimensionality Reduction, and Gird Search for optimizing the model architecture. The Lean \acs{LGBM} performs on par with the \acs{LGBM} and \acs{ANN} models and provided F1-Score of 80.95\%. 
+This study aimed to evaluate the performance of different Machine Learning and Deep Learning techniques on an industry scale dataset for Credit Card Default prediction. The American Express - Default Prediction Dataset \citep{amex-default-prediction-dataset} was chosen as Primary Dataset for the experiments as the dataset contained 5 Million records from year 2017-18; in addition, a Secondary Dataset was created from the Primary Dataset using feature engineering techniques. The dataset was trained on 8 different models(5 Machine Learning \& 3 Deep Learning models); moreover, Early Stopping technique in \acs{ML} \& Dropouts in \acs{DL} were used to avoid overfitting issues of the model. In the pre-processing pipeline of the model, K-Means \acs{SMOTE} Data Oversampling techniques were used to mitigate the Class Imbalance issue. \acs{LGBM} model provided the highest F1-Score of 81.01\% among the \acs{ML} models; on the other hand, \acs{ANN} model scored highest F1-Score of 81.03\% among the \acs{DL} models. Evidently, the performance improvement obtained by using \acs{ANN} is not significant compared to \acs{LGBM} model. Based on this observation, a Lean \acs{LGBM} model was proposed for industry use cases. The proposed model uses K-Means \acs{SMOTE} for Data Oversampling, Select From Model technique for Feature Selection/Dimensionality Reduction, and Gird Search for optimizing the model architecture. The Lean \acs{LGBM} performs on par with the \acs{LGBM} and \acs{ANN} models and provided F1-Score of 80.95\%. 
 
 In conclusion,  the Ensemble Boosting model \acs{LGBM} combined with feature selection and Data Oversampling technique provides the best performance in terms of F1-Score \& computational efficiency for the Credit Card Default Prediction task.
 
@@ -887,11 +921,36 @@ In conclusion,  the Ensemble Boosting model \acs{LGBM} combined with feature sel
 
 \vfill
 \clearpage
+\FloatBarrier
 \section{Appendix One: Code}
 
-\subsection{Directory Structure} 
+\subsection{Source \& Structure of Git Repository}
+The code used in this project hosted in below two locations
+\begin{enumerate}
+	\item \url{https://git-teaching.cs.bham.ac.uk/mod-msc-proj-2021/sxp208}
+	\item \url{https://github.com/sankardevisharath/amex-default-prediction}
+\end{enumerate}
+Repository hosted in Github(Link 2) contains the complete commit history including activity log while the repository hosted UoB GitLab(Link 1) contains only the final version of the project.
+The figure \ref{fig:directory_structure} shows the directory structure of the project. The "notebooks" directory contains all the experiments conducted as part of this project. The final 9 models which are discussed in this report are present in directory "notebooks/final\_model".\\
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.99\textwidth, height=0.7\textheight]{directory_structure}
+	\caption[Directory Structure of the Project]{Directory Structure of the Project}
+	\label{fig:directory_structure}
+\end{figure} 
+\FloatBarrier
 \subsection{Running the Provided Code}
+The final 9 models present in the directory "notebooks/final\_model" can be run using the below steps. A Google Colab subscription, Google Drive Account are a pre-requisite for running the code.
+\begin{enumerate}
+	\item Download the Primary Dataset and place it in Google Drive location "amex-default-prediction/data/raw/".
+	\item Download the Secondary Dataset and place it in Google Drive location "amex-default-prediction/data/aggr/".
+	\item Double click on the Google Colab link on the top of the final model notebook.
+	\item Mount the Google Drive in Google Colab using "File" menu.
+	\item Once the Google Drive is mount, click "Run All" button to execute the model.
+\end{enumerate}
+
+
 
 \clearpage
 \end{document}
